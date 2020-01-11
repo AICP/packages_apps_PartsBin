@@ -91,7 +91,7 @@ public class DeviceSettings extends PreferenceFragment implements
     public static final String KEY_FASTCHARGE_SWITCH = "fastcharge";
     public static final String KEY_REFRESH_RATE = "refresh_rate";
     public static final String KEY_AUTO_REFRESH_RATE = "auto_refresh_rate";
-    private static final String KEY_ENABLE_DOLBY_ATMOS = "enable_dolby_atmos";
+    public static final String KEY_ENABLE_DOLBY_ATMOS = "enable_dolby_atmos";
     public static final String KEY_OFFSCREEN_GESTURES = "gesture_category";
     public static final String KEY_PANEL_SETTINGS = "panel_category";
     public static final String SLIDER_DEFAULT_VALUE = "2,1,0";
@@ -121,7 +121,7 @@ public class DeviceSettings extends PreferenceFragment implements
     private static TwoStatePreference mSweepToWakeSwitch;
     private static TwoStatePreference mRefreshRate;
     private static TwoStatePreference mAutoRefreshRate;
-    private SwitchPreference mEnableDolbyAtmos;
+    private static TwoStatePreference mEnableDolbyAtmos;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -327,14 +327,12 @@ public class DeviceSettings extends PreferenceFragment implements
         if (countVibRemoved == 3) vibratorCategory.getParent().removePreference(vibratorCategory);
 
         PreferenceCategory audioCategory = (PreferenceCategory) findPreference(KEY_AUDIO_CATEGORY);
+        mEnableDolbyAtmos = (TwoStatePreference) findPreference(KEY_ENABLE_DOLBY_ATMOS);
         if (!PackageUtils.isPackageAvailable(getContext(), OP7_DOLBY_PKGNAME)) {
             audioCategory.getParent().removePreference(audioCategory);
+        } else {
+            mEnableDolbyAtmos.setOnPreferenceChangeListener(this);
         }
-    }
-
-    @Override
-    public boolean onPreferenceTreeClick(Preference preference) {
-        return super.onPreferenceTreeClick(preference);
     }
 
     @Override
@@ -345,36 +343,40 @@ public class DeviceSettings extends PreferenceFragment implements
             setSliderAction(0, sliderMode);
             int valueIndex = mSliderModeTop.findIndexOfValue(value);
             mSliderModeTop.setSummary(mSliderModeTop.getEntries()[valueIndex]);
+            return true;
         } else if (preference == mSliderModeCenter) {
             String value = (String) newValue;
             int sliderMode = Integer.valueOf(value);
             setSliderAction(1, sliderMode);
             int valueIndex = mSliderModeCenter.findIndexOfValue(value);
             mSliderModeCenter.setSummary(mSliderModeCenter.getEntries()[valueIndex]);
+            return true;
         } else if (preference == mSliderModeBottom) {
             String value = (String) newValue;
             int sliderMode = Integer.valueOf(value);
             setSliderAction(2, sliderMode);
             int valueIndex = mSliderModeBottom.findIndexOfValue(value);
             mSliderModeBottom.setSummary(mSliderModeBottom.getEntries()[valueIndex]);
+            return true;
         } else if (preference == mEnableDolbyAtmos) {
-          boolean enabled = (Boolean) newValue;
-          Intent daxService = new Intent();
-          ComponentName name = new ComponentName("com.dolby.daxservice", "com.dolby.daxservice.DaxService");
-          daxService.setComponent(name);
-          if (enabled) {
-              // enable service component and start service
-              this.getContext().getPackageManager().setComponentEnabledSetting(name,
-                      PackageManager.COMPONENT_ENABLED_STATE_DEFAULT, 0);
-              this.getContext().startService(daxService);
-          } else {
-              // disable service component and stop service
-              this.getContext().stopService(daxService);
-              this.getContext().getPackageManager().setComponentEnabledSetting(name,
-                      PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 0);
-          }
+            boolean enabled = (Boolean) newValue;
+            Intent daxService = new Intent();
+            ComponentName name = new ComponentName("com.dolby.daxservice", "com.dolby.daxservice.DaxService");
+            daxService.setComponent(name);
+            if (enabled) {
+                // enable service component and start service
+                this.getContext().getPackageManager().setComponentEnabledSetting(name,
+                        PackageManager.COMPONENT_ENABLED_STATE_DEFAULT, 0);
+                this.getContext().startService(daxService);
+            } else {
+                // disable service component and stop service
+                this.getContext().stopService(daxService);
+                this.getContext().getPackageManager().setComponentEnabledSetting(name,
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 0);
+            }
+            return true;
         }
-        return true;
+        return false;
     }
 
     private int getSliderAction(int position) {
