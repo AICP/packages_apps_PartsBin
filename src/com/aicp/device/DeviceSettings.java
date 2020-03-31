@@ -58,6 +58,11 @@ public class DeviceSettings extends PreferenceFragment implements
     private static final String KEY_GESTURES_CATEGORY = "category_gestures";
     private static final String KEY_POWER_CATEGORY = "category_power";
 
+    public static final String KEY_HEADPHONE_GAIN = "headphone_gain";
+    public static final String KEY_EARPIECE_GAIN = "earpiece_gain";
+    public static final String KEY_MIC_GAIN = "mic_gain";
+    public static final String KEY_SPEAKER_GAIN = "speaker_gain";
+
     public static final String KEY_SRGB_SWITCH = "srgb";
     public static final String KEY_HBM_SWITCH = "hbm";
     public static final String KEY_PROXI_SWITCH = "proxi";
