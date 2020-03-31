@@ -171,5 +171,10 @@ public class Startup extends BroadcastReceiver {
 
         enabled = Settings.System.getInt(context.getContentResolver(), FastChargeSwitch.SETTINGS_KEY, 0) != 0;
         restore(FastChargeSwitch.getFile(context), enabled);
+
+        HeadphoneGainPreference.restore(context);
+        EarpieceGainPreference.restore(context);
+        MicGainPreference.restore(context);
+        SpeakerGainPreference.restore(context);
     }
 }
