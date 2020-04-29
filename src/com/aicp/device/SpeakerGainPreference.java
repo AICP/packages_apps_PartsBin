@@ -54,7 +54,7 @@ public class SpeakerGainPreference extends Preference implements
         if (isSupported()) {
             mMinValue = (int) context.getResources().getInteger(R.integer.audioSpeakerGainMin);
             mMaxValue = (int) context.getResources().getInteger(R.integer.audioSpeakerGainMax);
-            defaultValue = Integer.toString(context.getResources().getInteger(R.integer.audioSpeakerGainDefault));
+            defaultValue = getDefaultValue(context);
         }
         DEFAULT_VALUE = defaultValue;
         setLayoutResource(R.layout.preference_seek_bar);
@@ -98,8 +98,8 @@ public class SpeakerGainPreference extends Preference implements
         Utils.writeValue(mFileName, storedValue);
     }
 
-    public static String getDefaultValue() {
-        return DEFAULT_VALUE;
+    public static String getDefaultValue(Context context) {
+        return Integer.toString(context.getResources().getInteger(R.integer.audioSpeakerGainDefault));
     }
 
     @Override
