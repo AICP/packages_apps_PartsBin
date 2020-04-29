@@ -54,7 +54,7 @@ public class HeadphoneGainPreference extends Preference implements
         if (isSupported()) {
             mMinValue = (int) context.getResources().getInteger(R.integer.audioHeadphoneGainMin);
             mMaxValue = (int) context.getResources().getInteger(R.integer.audioHeadphoneGainMax);
-            defaultValue = Integer.toString(context.getResources().getInteger(R.integer.audioHeadphoneGainDefault));
+            defaultValue = getDefaultValue(context);
         }
         DEFAULT_VALUE = defaultValue;
         setLayoutResource(R.layout.preference_seek_bar);
@@ -98,8 +98,9 @@ public class HeadphoneGainPreference extends Preference implements
         Utils.writeValueDual(mFileName, storedValue);
     }
 
-    public static String getDefaultValue() {
-        return DEFAULT_VALUE;
+    public static String getDefaultValue(Context context) {
+        return isSupported() ? Integer.toString(context.getResources().getInteger(R.integer.audioHeadphoneGainDefault)) :
+                                Integer.toString(0);
     }
 
     @Override

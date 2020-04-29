@@ -54,7 +54,7 @@ public class EarpieceGainPreference extends Preference implements
         if (isSupported()) {
             mMinValue = (int) context.getResources().getInteger(R.integer.audioEarpieceMin);
             mMaxValue = (int) context.getResources().getInteger(R.integer.audioEarpieceMax);
-            defaultValue = Integer.toString(context.getResources().getInteger(R.integer.audioEarpieceDefault));
+            defaultValue = getDefaultValue(context);
         }
         DEFAULT_VALUE = defaultValue;
         setLayoutResource(R.layout.preference_seek_bar);
@@ -98,8 +98,9 @@ public class EarpieceGainPreference extends Preference implements
         Utils.writeValue(mFileName, storedValue);
     }
 
-    public static String getDefaultValue() {
-        return DEFAULT_VALUE;
+    public static String getDefaultValue(Context context) {
+        return isSupported() ? Integer.toString(context.getResources().getInteger(R.integer.audioEarpieceDefault)) :
+                                Integer.toString(0);
     }
 
     @Override
