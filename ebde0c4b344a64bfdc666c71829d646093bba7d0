@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e2c6c89_2079c95f",
+        "filename": "privapp_whitelist_com.aicp.device.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1375
+      },
+      "writtenOn": "2020-05-11T19:41:56Z",
+      "side": 1,
+      "message": "why LOS copyright?",
+      "revId": "ebde0c4b344a64bfdc666c71829d646093bba7d0",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b",
+      "unresolved": true
+    }
+  ]
+}
