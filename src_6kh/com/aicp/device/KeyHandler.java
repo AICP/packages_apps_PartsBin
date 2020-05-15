@@ -255,12 +255,6 @@ public class KeyHandler implements CustomKeyHandler {
             return false;
         }
 
-        int scanCode = event.getScanCode();
-        if (scanCode == KEY_SINGLE_TAP) {
-            launchDozePulse();
-            return false;
-        }
-
         return false;
     }
 
@@ -293,6 +287,7 @@ public class KeyHandler implements CustomKeyHandler {
             if (DEBUG) Log.i(TAG, "isWakeEvent " + event.getScanCode() + value);
             return true;
         }
+        if (event.getScanCode() == KEY_SINGLE_TAP) launchDozePulse();
         return event.getScanCode() == KEY_DOUBLE_TAP;
     }
 
