@@ -258,7 +258,7 @@ public class KeyHandler implements CustomKeyHandler {
         int scanCode = event.getScanCode();
         if (scanCode == KEY_SINGLE_TAP) {
             launchDozePulse();
-            return false;
+            return true;
         }
 
         return false;
