@@ -44,7 +44,8 @@ public class Constants {
     public static final int KEY_VALUE_NORMAL = 4;
 
     // Single tap key code
-    public static final int KEY_SINGLE_TAP = 67;
+    public static final int KEY_SINGLE_TAP = 255;
+
     // Key Codes
     public static final int KEY_DOUBLE_TAP = 143;
     public static final int KEY_HOME = 102;
@@ -76,8 +77,8 @@ public class Constants {
     public static final int GESTURE_CIRCLE_SCANCODE = 250;
     public static final int GESTURE_II_SCANCODE = 251;
     public static final int GESTURE_V_SCANCODE = 252;
-    public static final int GESTURE_RIGHT_V_SCANCODE = 253;
-    public static final int GESTURE_LEFT_V_SCANCODE = 254;
+    public static final int GESTURE_LEFT_V_SCANCODE = 253;
+    public static final int GESTURE_RIGHT_V_SCANCODE = 254;
 
     public static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
 
