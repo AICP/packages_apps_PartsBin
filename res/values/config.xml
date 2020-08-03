@@ -105,4 +105,7 @@
     <integer name="audioSpeakerGainMin"></integer>
     <integer name="audioSpeakerGainMax"></integer>
     <integer name="audioSpeakerGainDefault"></integer>
+
+    <!-- Whether device support DC Dimming to show tile -->
+    <bool name="DCDSwitch_tile">false</bool>
 </resources>
