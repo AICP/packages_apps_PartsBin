@@ -105,4 +105,14 @@
     <integer name="audioSpeakerGainMin"></integer>
     <integer name="audioSpeakerGainMax"></integer>
     <integer name="audioSpeakerGainDefault"></integer>
+
+    <!-- Whether device support DC Dimming to show tile -->
+    <bool name="DCDSwitch_tile">false</bool>
+
+    <!-- Whether device support Panel Mode to show tile -->
+    <bool name="PanelModeSwitch_tile">false</bool>
+
+    <!-- Whether device support HBM Mode to show tile -->
+    <bool name="HBMModeSwitch_tile">false</bool>
+
 </resources>
