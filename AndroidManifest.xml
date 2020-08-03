@@ -106,7 +106,8 @@
             android:name="com.aicp.device.DCDModeTileService"
             android:icon="@drawable/ic_dc_tile"
             android:label="@string/tile_dcd_mode"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+	    android:enabled="@bool/DCDSwitch_tile"
+	    android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action
                     android:name="android.service.quicksettings.action.QS_TILE"/>
