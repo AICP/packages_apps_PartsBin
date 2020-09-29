@@ -106,7 +106,7 @@
         </service>
         <service
             android:name="com.aicp.device.DCDModeTileService"
-            android:icon="@drawable/ic_dimming_off"
+            android:icon="@drawable/ic_dc_tile"
             android:label="@string/tile_dcd_mode"
             android:enabled="@bool/enableDCDTile"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
