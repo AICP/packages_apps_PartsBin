@@ -19,6 +19,8 @@
 
     <bool name="config_device_has_hw_nav_buttons">false</bool>
 
+    <bool name="config_device_supports_soundtuner">false</bool>
+
     <!-- Whether device supports offscreen gestures -->
     <bool name="config_device_supports_gestures">true</bool>
 
@@ -41,6 +43,7 @@
     <string name="pathSweepToWakeToggle"></string>
 
     <!-- Path to devices High Brigness Mode toggle file -->
+    <!-- Example values are "0" for off and "1! for on -->
     <string name="pathHBMModeToggle"></string>
     <string name="hbmOFF">"0"</string>
     <string name="hbmON">"1"</string>
