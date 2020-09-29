@@ -19,6 +19,8 @@
 
     <bool name="config_device_has_hw_nav_buttons">false</bool>
 
+    <bool name="config_device_supports_switch_refreshrate">false</bool>
+
     <bool name="config_device_supports_soundtuner">false</bool>
 
     <!-- Whether device supports offscreen gestures -->
@@ -115,6 +117,9 @@
 
     <!-- Show/hide the QS tile, if device supports DC Dimming or not -->
     <bool name="enableDCDTile">false</bool>
+
+    <!-- Show/hide the QS tile, if device supports refreshrate switching or not -->
+    <bool name="enableRefreshrateTile">false</bool>
 
     <!-- Show/hide the QS tile, if device supports switching Displaymodes or not -->
     <bool name="enablePanelModeTile">false</bool>
