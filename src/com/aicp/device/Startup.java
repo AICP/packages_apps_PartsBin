@@ -28,7 +28,6 @@ import android.provider.Settings;
 import android.text.TextUtils;
 
 public class Startup extends BroadcastReceiver {
-
     private static void restore(String file, boolean enabled) {
         if (file == null) {
             return;
@@ -85,6 +84,9 @@ public class Startup extends BroadcastReceiver {
 
             enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_WIDE_SWITCH, false);
             Settings.System.putInt(resolver, WideModeSwitch.SETTINGS_KEY, enabled ? 1 : 0);
+
+            enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_NIGHT_SWITCH, false);
+            Settings.System.putInt(resolver, NightModeSwitch.SETTINGS_KEY, enabled ? 1 : 0);
 
             String vibrSystemStrength = sharedPrefs.getString(DeviceSettings.KEY_SYSTEM_VIBSTRENGTH, VibratorSystemStrengthPreference.getDefaultValue(context));
             Settings.System.putString(resolver, VibratorSystemStrengthPreference.SETTINGS_KEY, vibrSystemStrength);
@@ -203,6 +205,9 @@ public class Startup extends BroadcastReceiver {
 
         enabled = Settings.System.getInt(resolver, HBMModeSwitch.SETTINGS_KEY, 0) != 0;
         restore(HBMModeSwitch.getFile(context), enabled);
+
+        enabled = Settings.System.getInt(resolver, NightModeSwitch.SETTINGS_KEY, 0) != 0;
+        restore(NightModeSwitch.getFile(context), enabled);
 
         enabled = Settings.System.getInt(resolver, FastChargeSwitch.SETTINGS_KEY, 0) != 0;
         restore(FastChargeSwitch.getFile(context), enabled);
