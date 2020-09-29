@@ -1,120 +1,156 @@
 # PartsBin
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](./LICENSE.txt)
 
-**A configurable collection of settings for OnePlus phones.**
+*A configurable collection of settings for OnePlus phones.*
 
-Currently supporting
+### Currently supported devices:
 
-	op5: Cheeseburger
+  * OnePlus 5:      cheeseburger
+  * OnePlus 5T:     dumpling
+  * OnePlus 6:      enchilada
+  * OnePlus 6T:     fajita
+  * OnePlus 7:      guacamoleb
+  * OnePlus 7 Pro:  guacamole
+  * OnePlus 7T Pro: hotdog
 
-	op5t: Dumpling
+### Description
 
-	op6: Enchilada
-
-	op7: Guacamoleb
-
-Idea is to manage device specific settings from a common code base while allowing
-features/implementations unique to individual devices to coexist with common
-ones. Feature availability is controlled by adding various overlays to the device
+Based on OMNIROMs DeviceParts package, the idea is to manage device specific
+settings from a common code base while allowing features/implementations
+to be unique to individual devices to coexist with common ones.
+Feature availability is controlled by adding various overlays to the device
 tree for this package. Overlays are mostly sysfs paths controlling that particular
-feature. This application must have proper file access and sepolicy security contexts
-to those sysfs paths.
+feature.
+This application must have proper file access and sepolicy security contexts to those sysfs paths.
 
-Resources are used from https://github.com/AICP/packages_resources_deviceparts
+Resource strings are used from https://github.com/AICP/packages_resources_deviceparts
 
-Currently supported features include:
+### Currently supported features include:
 
-	*Toggles*
+**Toggles and Paths**
+
+_Note that defining paths needs support in the kernel! Thus the features might not work, if you are using a custom kernel._
 
 	HWKSwitch: Hardware keys swap toggle (supported on devices hw nav keys)
 
-	HBMSwitch: High Brightness Mode toggle with configurable off-on values
+	Offscreen-gestures: Only set to true, if the device supports Screengestures while the display is off.
 
-	DCDSwitch: DC Dimming toggle
+	Doubletap to wake (DT2W): En-/disable waking up the display by tapping on it two times.
 
-	Panel Modes: sRGB, DCI-P3, WideColor, OnePlus
+	Sweep to wake (S2W): En-/disable waking up the display by swiping from left to right in the lower section.
+
+	SoundTuner: En-/disable the proprietary SoundTuner (OnePlus specific)
+
+	HBMSwitch: High Brightness Mode toggle with configurable off-on values with additional QS tile
+
+	DCDSwitch: DC-Dimming toggle with additional QS tile
+
+	Displaypanel Color Modes: sRGB, DCI-P3, WideColor, OnePlus, Nightmode. With additional QS tile
+
+	Display Refreshrate: Automatic, Manual (60Hz, 90Hz) with additional QS tile
+	[Note: Requires setting the kernel node for "dynamic_fps" and a few other bools.]
 
 	Vibration Modes: System, Calls, Notifications
-	*if any vibration is used, 3 integer vibrator overlays **must** be defined
+	[Note: For a vibration to work the corresponding integer vibrator overlays must be defined.]
 
-	*ScreenOffGestures*
+	Fastcharge: En-/disable USB charging with max. 900mA
 
-	Single Tap - to display ambient mode
+**Screen-Off Gestures (with optional haptic feedback)**
 
-	Music Control - Play/Pause, skip to prev or next track
+	SingleTap - to display ambient mode
 
-	O-W-M-S Gestures - configurable
+	Music Control - Play/Pause ("||"), skip to previous ("<") or next (">") track
+
+	Letter "O", "W", "M", "S", "V", "A" Gestures - configurable
 
 	Left-Right-Up-Down Swipes - configurable
 
-	Down Arrow Gesture - configurable
+**Fingerprintreader Swiping Gestures (on non-FOD devices)**
 
-	*AlertSlider*
+	Left-Right-Up-Down Fingerprint-Swipes - configurable
+	[Note: Down-Swipe can also be disabled in favour of the AOSP build-in gesture.]
+
+**AlertSlider**
 
 	Top-Center-Bottom positions with position bubbles
 
 	Possible selections:
 
-	Ringer: Ring, vibrate, silent
+	  - Ringer: ring, vibrate, silent
+	  - Zen mode: priority only, alarms only, do not disturb
+	  - Flashlight
 
-	Zen mode: priority only, alarms only, do not disturb
+**Configurable overlays**
 
-	Flashlight
+`<!-- Whether the device has hardware navigation buttons (true/false) -->`<br />
+`<bool name="config_device_has_hw_nav_buttons"> </bool>`<br />
 
-**Configurable overlays.**
+`<!-- Whether the device supports offscreen-gestures (true/false) -->`<br />
+`<bool name="config_device_supports_gestures"> </bool>`<br />
 
-	\<!-- Whether device supports disabling hwkeys -->
+`<!-- Whether the device supports the prebuilt SoundTuner (true/false) -->`<br />
+`<bool name="config_device_supports_soundtuner"> </bool>`<br />
 
-	\<string name="pathHWKToggle">\</string>
+`<!-- Whether device supports switching display refreshrates (true/false) -->`<br />
+`<bool name="config_device_supports_switch_refreshrate"> </bool>`<br />
 
-	\<!-- Path to devices single-tap toggle file -->
+`<!-- Show/hide the QS tile, if device supports DC Dimming or not. Default value is false. -->`<br />
+`<bool name="enableDCDTile">false</bool>`<br />
 
-	\<string name="pathSTapToggle">\</string>
+`<!-- Show/hide the QS tile, if device supports switching display refreshrates or not. Default value is false. -->`<br />
+`<bool name="enableRefreshrateTile">false</bool>`<br />
 
-	\<!-- Path to devices High Brigness Mode toggle file -->
+`<!-- Show/hide the QS tile, if device supports switching Displaymodes or not. Default value is false. -->`<br />
+`<bool name="enablePanelModeTile">false</bool>`<br />
 
-	\<string name="pathHBMModeToggle">\</string>
+`<!-- Show/hide the QS tile, if device supports switching HighBrightness mode or not. Default value is false. -->`<br />
+`<bool name="enableHBMModeTile">false</bool>`<br />
 
-	\<string name="hbmOFF">"0"\</string>
+`<!-- Whether device supports disabling hwkeys -->`<br />
+`<string name="pathHWKToggle"> </string>`<br />
 
-	\<string name="hbmON">"1"\</string>
+`<!-- Path to devices single-tap toggle file -->`<br />
+`<string name="pathSTapToggle"> </string>`<br />
 
-	\<!-- Path to devices High Brigness Mode toggle file -->
+`<!-- Path to devices doubletap to wake toggle file -->`<br />
+`<string name="pathDoubleTapToWakeToggle"> </string>`<br />
 
-	\<string name="pathOnePlusModeToggle">\</string>
+`<!-- Path to devices sweep to wake toggle file -->`<br />
+`<string name="pathSweepToWakeToggle"> </string>`<br />
 
-	\<!-- Path to devices SRGBMode toggle file -->
+`<!-- Path to devices High Brightness Mode toggle file -->`<br />
+`<string name="pathHBMModeToggle"> </string>`<br />
+`<string name="hbmOFF">"0"</string>`<br />
+`<string name="hbmON">"1"</string>`<br />
 
-	\<string name="pathSRGBModeToggle">\</string>
+`<!-- Path to devices OnePlus Mode toggle file -->`<br />
+`<string name="pathOnePlusModeToggle"> </string>`<br />
 
-	\<!-- Path to devices DCIMode toggle file -->
+`<!-- Path to devices SRGBMode toggle file -->`<br />
+`<string name="pathSRGBModeToggle"> </string>`<br />
 
-	\<string name="pathDCIModeToggle">\</string>
+`<!-- Path to devices DCI-P3 Mode toggle file -->`<br />
+`<string name="pathDCIModeToggle"> </string>`<br />
 
-	\<!-- Path to devices DCDMode toggle file -->
+`<!-- Path to devices Nightmode toggle file -->`<br />
+`<string name="pathNightModeToggle"> </string>`<br />
 
-	\<string name="pathDCDModeToggle">\</string>
+`<!-- Path to devices DC-Dimming Mode toggle file -->`<br />
+`<string name="pathDCDModeToggle"> </string>`<br />
 
-	\<!-- Path to devices WideMode toggle file -->
+`<!-- Path to devices WideMode toggle file -->`<br />
+`<string name="pathWideModeToggle"> </string>`<br />
 
-	\<string name="pathWideModeToggle">\</string>
+`<!-- Path to devices system vibrationlevels -->`<br />
+`<string name="pathSystemVibStrength"> </string>`<br />
 
-	\<!-- Whether device allow changing system vibrationlevels -->
+`<!-- Path to devices calls vibrationlevels -->`<br />
+`<string name="pathCallVibStrength"> </string>`<br />
 
-	\<string name="pathSystemVibStrength">\</string>
+`<!-- Path to devices notification vibrationlevels -->`<br />
+`<string name="pathNotifVibStrength"> </string>`<br />
 
-	\<!-- Whether device allow changing calls vibrationlevels -->
-
-	\<string name="pathCallVibStrength">\</string>
-
-	\<!-- Whether device allow changing notification vibrationlevels -->
-
-	\<string name="pathNotifVibStrength">\</string>
-
-	\<!-- Device vibrator min-max-default values -->
-
-	\<integer name="vibratorMinMV">\</integer>
-
-	\<integer name="vibratorMaxMV">\</integer>
-
-	\<integer name="vibratorDefaultMV">\</integer>
+`<!-- Device vibrator min-max-default values -->`<br />
+`<integer name="vibratorMinMV"> </integer>`<br />
+`<integer name="vibratorMaxMV"> </integer>`<br />
+`<integer name="vibratorDefaultMV"> </integer>`<br />
