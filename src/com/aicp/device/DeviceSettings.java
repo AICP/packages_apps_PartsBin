@@ -60,6 +60,7 @@ public class DeviceSettings extends PreferenceFragment implements
 
     private static final String KEY_BUTTON_CATEGORY = "category_buttons";
     private static final String KEY_GRAPHICS_CATEGORY = "category_graphics";
+    private static final String KEY_CATEGORY_REFRESH = "category_refresh";
     private static final String KEY_VIBRATOR_CATEGORY = "category_vibrator";
     private static final String KEY_SLIDER_CATEGORY = "category_slider";
     private static final String KEY_GESTURES_CATEGORY = "category_gestures";
@@ -85,6 +86,8 @@ public class DeviceSettings extends PreferenceFragment implements
     public static final String KEY_DT2W_SWITCH = "double_tap_to_wake";
     public static final String KEY_S2W_SWITCH = "sweep_to_wake";
     public static final String KEY_FASTCHARGE_SWITCH = "fastcharge";
+    public static final String KEY_REFRESH_RATE = "refresh_rate";
+    public static final String KEY_AUTO_REFRESH_RATE = "auto_refresh_rate";
     private static final String KEY_ENABLE_DOLBY_ATMOS = "enable_dolby_atmos";
     public static final String KEY_OFFSCREEN_GESTURES = "gesture_category";
     public static final String KEY_PANEL_SETTINGS = "panel_category";
@@ -113,7 +116,8 @@ public class DeviceSettings extends PreferenceFragment implements
     private static TwoStatePreference mFastChargeSwitch;
     private static TwoStatePreference mDoubleTapToWakeSwitch;
     private static TwoStatePreference mSweepToWakeSwitch;
-
+    private static TwoStatePreference mRefreshRate;
+    private static TwoStatePreference mAutoRefreshRate;
     private SwitchPreference mEnableDolbyAtmos;
 
     @Override
@@ -234,6 +238,22 @@ public class DeviceSettings extends PreferenceFragment implements
             graphicsRemoved += 1;
         }
         if (graphicsRemoved == 3) graphicsCategory.getParent().removePreference(graphicsCategory);
+
+        boolean supports_refreshrate = getContext().getResources().
+                getBoolean(R.bool.config_device_supports_switch_refreshrate);
+        if (supports_refreshrate) {
+            mAutoRefreshRate = (TwoStatePreference) findPreference(KEY_AUTO_REFRESH_RATE);
+            mAutoRefreshRate.setChecked(AutoRefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
+            mAutoRefreshRate.setOnPreferenceChangeListener(new AutoRefreshRateSwitch(getContext()));
+
+            mRefreshRate = (TwoStatePreference) findPreference(KEY_REFRESH_RATE);
+            mRefreshRate.setEnabled(!AutoRefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
+            mRefreshRate.setChecked(RefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
+            mRefreshRate.setOnPreferenceChangeListener(new RefreshRateSwitch(getContext()));
+        } else {
+            PreferenceCategory refreshCategory = (PreferenceCategory) findPreference(KEY_CATEGORY_REFRESH);
+            refreshCategory.getParent().removePreference(refreshCategory);
+        }
 
         PreferenceCategory powerCategory = (PreferenceCategory) findPreference(KEY_POWER_CATEGORY);
         mFastChargeSwitch = (TwoStatePreference) findPreference(KEY_FASTCHARGE_SWITCH);
