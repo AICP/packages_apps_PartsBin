@@ -109,4 +109,13 @@
     <integer name="audioSpeakerGainMin"></integer>
     <integer name="audioSpeakerGainMax"></integer>
     <integer name="audioSpeakerGainDefault"></integer>
+
+    <!-- Show/hide the QS tile, if device supports DC Dimming or not -->
+    <bool name="enableDCDTile">false</bool>
+
+    <!-- Show/hide the QS tile, if device supports switching Displaymodes or not -->
+    <bool name="enablePanelModeTile">false</bool>
+
+    <!-- Show/hide the QS tile, if device supports switching HighBrightness mode or not -->
+    <bool name="enableHBMModeTile">false</bool>
 </resources>
