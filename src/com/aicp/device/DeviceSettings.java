@@ -43,6 +43,7 @@ import androidx.preference.TwoStatePreference;
 import androidx.preference.SwitchPreference;
 
 import com.android.internal.util.aicp.PackageUtils;
+import com.aicp.gear.preference.SelfRemovingPreferenceCategory;
 
 public class DeviceSettings extends PreferenceFragment implements
         Preference.OnPreferenceChangeListener {
@@ -128,8 +129,6 @@ public class DeviceSettings extends PreferenceFragment implements
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.main, rootKey);
 
-        boolean hasAlertSlider = getContext().getResources().
-                getBoolean(com.android.internal.R.bool.config_hasAlertSlider);
         boolean supportsGestures = getContext().getResources().getBoolean(R.bool.config_device_supports_gestures);
         boolean supportsPanels = getContext().getResources().getBoolean(R.bool.config_device_supports_panels);
         boolean supportsSoundtuner = getContext().getResources()
@@ -137,7 +136,8 @@ public class DeviceSettings extends PreferenceFragment implements
         boolean supportsRefreshrate = getContext().getResources()
                 .getBoolean(R.bool.config_device_supports_switch_refreshrate);
 
-        if (hasAlertSlider) {
+        SelfRemovingPreferenceCategory sliderCategory = (SelfRemovingPreferenceCategory) findPreference(KEY_SLIDER_CATEGORY);
+        if (sliderCategory != null) {
             mSliderModeTop = (ListPreference) findPreference(KEY_SLIDER_MODE_TOP);
             mSliderModeTop.setOnPreferenceChangeListener(this);
             int sliderModeTop = getSliderAction(0);
@@ -158,9 +158,6 @@ public class DeviceSettings extends PreferenceFragment implements
             valueIndex = mSliderModeBottom.findIndexOfValue(String.valueOf(sliderModeBottom));
             mSliderModeBottom.setValueIndex(valueIndex);
             mSliderModeBottom.setSummary(mSliderModeBottom.getEntries()[valueIndex]);
-        } else {
-            PreferenceCategory sliderCategory = (PreferenceCategory) findPreference(KEY_SLIDER_CATEGORY);
-            sliderCategory.getParent().removePreference(sliderCategory);
         }
 
         if (supportsSoundtuner) {
@@ -311,30 +308,27 @@ public class DeviceSettings extends PreferenceFragment implements
         }
         if (audiogainsRemoved == 4) audiogainsCategory.getParent().removePreference(audiogainsCategory);
 
-        PreferenceCategory vibratorCategory = (PreferenceCategory) findPreference(KEY_VIBRATOR_CATEGORY);
-        int countVibRemoved = 0;
-        mVibratorSystemStrength = (VibratorSystemStrengthPreference) findPreference(KEY_SYSTEM_VIBSTRENGTH);
-        if (mVibratorSystemStrength != null && mVibratorSystemStrength.isSupported()) {
-            mVibratorSystemStrength.setEnabled(true);
-        } else {
-            mVibratorSystemStrength.getParent().removePreference(mVibratorSystemStrength);
-            countVibRemoved += 1;
-        }
-        mVibratorCallStrength = (VibratorCallStrengthPreference) findPreference(KEY_CALL_VIBSTRENGTH);
-        if (mVibratorCallStrength != null && mVibratorCallStrength.isSupported()) {
+        SelfRemovingPreferenceCategory vibratorCategory = (SelfRemovingPreferenceCategory) findPreference(KEY_VIBRATOR_CATEGORY);
+        if(vibratorCategory !=null) {
+            mVibratorSystemStrength = (VibratorSystemStrengthPreference) findPreference(KEY_SYSTEM_VIBSTRENGTH);
+            if (mVibratorSystemStrength != null && mVibratorSystemStrength.isSupported()) {
+                mVibratorSystemStrength.setEnabled(true);
+            } else {
+                mVibratorSystemStrength.getParent().removePreference(mVibratorSystemStrength);
+            }
+            mVibratorCallStrength = (VibratorCallStrengthPreference) findPreference(KEY_CALL_VIBSTRENGTH);
+            if (mVibratorCallStrength != null && mVibratorCallStrength.isSupported()) {
             mVibratorCallStrength.setEnabled(true);
-        } else {
-            mVibratorCallStrength.getParent().removePreference(mVibratorCallStrength);
-            countVibRemoved += 1;
+            } else {
+                mVibratorCallStrength.getParent().removePreference(mVibratorCallStrength);
+            }
+            mVibratorNotifStrength = (VibratorNotifStrengthPreference) findPreference(KEY_NOTIF_VIBSTRENGTH);
+            if (mVibratorNotifStrength != null && mVibratorNotifStrength.isSupported()) {
+                mVibratorNotifStrength.setEnabled(true);
+            } else {
+                mVibratorNotifStrength.getParent().removePreference(mVibratorNotifStrength);
+            }
         }
-        mVibratorNotifStrength = (VibratorNotifStrengthPreference) findPreference(KEY_NOTIF_VIBSTRENGTH);
-        if (mVibratorNotifStrength != null && mVibratorNotifStrength.isSupported()) {
-            mVibratorNotifStrength.setEnabled(true);
-        } else {
-            mVibratorNotifStrength.getParent().removePreference(mVibratorNotifStrength);
-            countVibRemoved += 1;
-        }
-        if (countVibRemoved == 3) vibratorCategory.getParent().removePreference(vibratorCategory);
     }
 
     @Override

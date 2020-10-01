@@ -14,7 +14,8 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aicpextras="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:key="category_audio"
@@ -133,8 +134,9 @@
         </Preference>
     </PreferenceCategory>
 
-    <PreferenceCategory
+    <com.aicp.gear.preference.SelfRemovingPreferenceCategory
         android:key="category_slider"
+        aicpextras:requiresConfig="@*android:bool/config_hasAlertSlider"
         android:title="@string/category_slider">
         <ListPreference
             android:key="slider_mode_top"
@@ -157,7 +159,7 @@
             android:entries="@array/slider_key_action_entries"
             android:entryValues="@array/slider_key_action_values"
             android:persistent="false" />
-    </PreferenceCategory>
+    </com.aicp.gear.preference.SelfRemovingPreferenceCategory>
 
     <PreferenceCategory
         android:key="category_audiogains"
@@ -209,8 +211,9 @@
             android:persistent="true" />
     </PreferenceCategory>
 
-    <PreferenceCategory
+    <com.aicp.gear.preference.SelfRemovingPreferenceCategory
         android:key="category_vibrator"
+        aicpextras:requiresConfig="@string/pathSystemVibStrength"
         android:title="@string/category_vibrator">
         <com.aicp.device.VibratorSystemStrengthPreference
             android:key="vib_system_strength"
@@ -232,6 +235,6 @@
             android:summary="@string/vib_notif_strength_summary"
             android:icon="@drawable/ic_notifications"
             android:persistent="false" />
-    </PreferenceCategory>
+    </com.aicp.gear.preference.SelfRemovingPreferenceCategory>
 
 </PreferenceScreen>
