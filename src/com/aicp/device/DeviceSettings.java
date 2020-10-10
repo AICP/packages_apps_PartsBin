@@ -131,10 +131,6 @@ public class DeviceSettings extends PreferenceFragment implements
 
         boolean supportsGestures = getContext().getResources().getBoolean(R.bool.config_device_supports_gestures);
         boolean supportsPanels = getContext().getResources().getBoolean(R.bool.config_device_supports_panels);
-        boolean supportsSoundtuner = getContext().getResources()
-                .getBoolean(R.bool.config_device_supports_soundtuner);
-        boolean supportsRefreshrate = getContext().getResources()
-                .getBoolean(R.bool.config_device_supports_switch_refreshrate);
 
         SelfRemovingPreferenceCategory sliderCategory = (SelfRemovingPreferenceCategory) findPreference(KEY_SLIDER_CATEGORY);
         if (sliderCategory != null) {
@@ -160,12 +156,10 @@ public class DeviceSettings extends PreferenceFragment implements
             mSliderModeBottom.setSummary(mSliderModeBottom.getEntries()[valueIndex]);
         }
 
-        if (supportsSoundtuner) {
+        SelfRemovingPreferenceCategory soundCategory = (SelfRemovingPreferenceCategory) findPreference(KEY_AUDIO_CATEGORY);
+        if (soundCategory != null) {
             mEnableDolbyAtmos = (SwitchPreference) findPreference(KEY_ENABLE_DOLBY_ATMOS);
             mEnableDolbyAtmos.setOnPreferenceChangeListener(this);
-        } else {
-            PreferenceCategory soundCategory = (PreferenceCategory) findPreference(KEY_AUDIO_CATEGORY);
-            soundCategory.getParent().removePreference(soundCategory);
         }
 
         mHWKSwitch = (TwoStatePreference) findPreference(KEY_HWK_SWITCH);
@@ -251,7 +245,8 @@ public class DeviceSettings extends PreferenceFragment implements
         }
         if (graphicsRemoved == 3) graphicsCategory.getParent().removePreference(graphicsCategory);
 
-        if (supportsRefreshrate) {
+        SelfRemovingPreferenceCategory refreshCategory = (SelfRemovingPreferenceCategory) findPreference(KEY_CATEGORY_REFRESH);
+        if (refreshCategory != null) {
             mAutoRefreshRate = (TwoStatePreference) findPreference(KEY_AUTO_REFRESH_RATE);
             mAutoRefreshRate.setChecked(AutoRefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
             mAutoRefreshRate.setOnPreferenceChangeListener(new AutoRefreshRateSwitch(getContext()));
@@ -260,9 +255,6 @@ public class DeviceSettings extends PreferenceFragment implements
             mRefreshRate.setEnabled(!AutoRefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
             mRefreshRate.setChecked(RefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
             mRefreshRate.setOnPreferenceChangeListener(new RefreshRateSwitch(getContext()));
-        } else {
-            PreferenceCategory refreshCategory = (PreferenceCategory) findPreference(KEY_CATEGORY_REFRESH);
-            refreshCategory.getParent().removePreference(refreshCategory);
         }
 
         PreferenceCategory powerCategory = (PreferenceCategory) findPreference(KEY_POWER_CATEGORY);

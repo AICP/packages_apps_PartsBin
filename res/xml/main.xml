@@ -17,8 +17,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aicpextras="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
+    <com.aicp.gear.preference.SelfRemovingPreferenceCategory
         android:key="category_audio"
+        aicpextras:requiresConfig="@bool/config_device_supports_soundtuner"
         android:title="@string/category_audio">
         <SwitchPreference
             android:key="enable_dolby_atmos"
@@ -41,7 +42,7 @@
             android:icon="@drawable/ic_info"
             android:persistent="false"
             android:summary="@string/enable_sound_info" />
-    </PreferenceCategory>
+    </com.aicp.gear.preference.SelfRemovingPreferenceCategory>
 
     <PreferenceCategory
         android:key="category_graphics"
@@ -70,8 +71,9 @@
         </Preference>
     </PreferenceCategory>
 
-    <PreferenceCategory
+    <com.aicp.gear.preference.SelfRemovingPreferenceCategory
         android:key="category_refresh"
+        aicpextras:requiresConfig="@bool/config_device_supports_switch_refreshrate"
         android:title="@string/refresh_title">
         <SwitchPreference
             android:key="auto_refresh_rate"
@@ -88,7 +90,7 @@
             android:icon="@drawable/ic_info"
             android:persistent="false"
             android:summary="@string/refresh_rate_warning" />
-    </PreferenceCategory>
+    </com.aicp.gear.preference.SelfRemovingPreferenceCategory>
 
     <PreferenceCategory
         android:key="category_gestures"
