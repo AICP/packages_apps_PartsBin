@@ -142,7 +142,6 @@ public class DeviceSettings extends PreferenceFragment implements
         final Resources res = getContext().getResources();
         boolean supportsGestures = res.getBoolean(R.bool.config_device_supports_gestures);
         boolean supportsPanels = res.getBoolean(R.bool.config_device_supports_panels);
-        boolean supportsSoundtuner = res.getBoolean(R.bool.config_device_supports_soundtuner);
 
         SelfRemovingPreferenceCategory sliderCategory = (SelfRemovingPreferenceCategory) findPreference(KEY_SLIDER_CATEGORY);
         if (sliderCategory != null) {
@@ -168,12 +167,10 @@ public class DeviceSettings extends PreferenceFragment implements
             mSliderModeBottom.setSummary(mSliderModeBottom.getEntries()[valueIndex]);
         }
 
-        if (supportsSoundtuner) {
+        SelfRemovingPreferenceCategory soundCategory = (SelfRemovingPreferenceCategory) findPreference(KEY_AUDIO_CATEGORY);
+        if (soundCategory != null) {
             mEnableDolbyAtmos = (SwitchPreference) findPreference(KEY_ENABLE_DOLBY_ATMOS);
             mEnableDolbyAtmos.setOnPreferenceChangeListener(this);
-        } else {
-            PreferenceCategory soundCategory = (PreferenceCategory) findPreference(KEY_AUDIO_CATEGORY);
-            soundCategory.getParent().removePreference(soundCategory);
         }
 
         mHWKSwitch = (TwoStatePreference) findPreference(KEY_HWK_SWITCH);
