@@ -18,6 +18,9 @@ endif
 ifeq ($(TARGET_DEVICE),$(filter $(TARGET_DEVICE),guacamole guacamoleb hotdog hotdogg))
     LOCAL_SRC_FILES += $(call all-java-files-under, src_7kh)
 endif
+ifeq ($(TARGET_DEVICE),$(filter $(TARGET_DEVICE),instantnoodle instantnoodlep kebab))
+    LOCAL_SRC_FILES += $(call all-java-files-under, src_8kh)
+endif
 LOCAL_PACKAGE_NAME := PartsBin
 LOCAL_CERTIFICATE := platform
 LOCAL_PRIVATE_PLATFORM_APIS := true
