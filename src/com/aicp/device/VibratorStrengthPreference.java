@@ -67,8 +67,6 @@ public abstract class VibratorStrengthPreference extends Preference implements
 
     protected abstract String getValue(Context context);
 
-    protected abstract boolean isSupported();
-
     protected abstract void setValue(String newValue, boolean withFeedback);
 
     public void onProgressChanged(SeekBar seekBar, int progress,
