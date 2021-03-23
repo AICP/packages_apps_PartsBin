@@ -28,7 +28,7 @@ public class VibratorNotifStrengthPreference extends VibratorStrengthPreference 
     protected static long testVibrationPattern[] = {0,250};
     protected static String SETTINGS_KEY = DeviceSettings.KEY_SETTINGS_PREFIX + DeviceSettings.KEY_NOTIF_VIBSTRENGTH;
 
-    private String mFileName;
+    private static String mFileName;
 
     public VibratorNotifStrengthPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -43,8 +43,7 @@ public class VibratorNotifStrengthPreference extends VibratorStrengthPreference 
         restore(context);
     }
 
-    @Override
-    protected boolean isSupported() {
+    public static boolean isSupported() {
         if (mFileName != null && !mFileName.isEmpty()) {
             return Utils.fileWritable(mFileName);
         }
@@ -64,6 +63,14 @@ public class VibratorNotifStrengthPreference extends VibratorStrengthPreference 
         if (withFeedback) {
             mVibrator.vibrate(testVibrationPattern, -1);
         }
+    }
+
+    public static String getFile(Context context){
+        mFileName = context.getResources().getString(R.string.pathSystemVibStrength);
+        if(isSupported()) {
+            return mFileName;
+        }
+        return null;
     }
 
     private void restore(Context context) {
