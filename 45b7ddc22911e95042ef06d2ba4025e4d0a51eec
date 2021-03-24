@@ -52,6 +52,24 @@
       "parentUuid": "8e440da7_d72f5699",
       "revId": "45b7ddc22911e95042ef06d2ba4025e4d0a51eec",
       "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4a28cec_75f51e8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 343
+      },
+      "writtenOn": "2021-03-24T15:51:12Z",
+      "side": 1,
+      "message": "misunderstanding it seems...\nall three strength settings are present by default in the settings. My point was that the node is not reflected there, when written on boot or changed while running. So I was wondering if some more check is needed to pass the value to the settings too. 🤷",
+      "parentUuid": "7b815ace_bb5525f8",
+      "revId": "45b7ddc22911e95042ef06d2ba4025e4d0a51eec",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
     }
   ]
 }
