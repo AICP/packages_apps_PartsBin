@@ -16,6 +16,24 @@
       "message": "test on hotdog. What I don\u0027t like here is, that that isSupported isn\u0027t overrideable any more",
       "revId": "45b7ddc22911e95042ef06d2ba4025e4d0a51eec",
       "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e440da7_d72f5699",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 343
+      },
+      "writtenOn": "2021-03-24T13:05:07Z",
+      "side": 1,
+      "message": "Theoretically we can support all 3 Strengths on all the devices, as the System supports them too via Accessibility Settings anyway. Meaning they are supported anyway.",
+      "parentUuid": "6e122bf1_adc26ac5",
+      "revId": "45b7ddc22911e95042ef06d2ba4025e4d0a51eec",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
     }
   ]
 }
