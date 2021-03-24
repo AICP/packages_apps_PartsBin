@@ -34,6 +34,24 @@
       "parentUuid": "6e122bf1_adc26ac5",
       "revId": "45b7ddc22911e95042ef06d2ba4025e4d0a51eec",
       "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b815ace_bb5525f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1375
+      },
+      "writtenOn": "2021-03-24T15:24:13Z",
+      "side": 1,
+      "message": "well this is not the issue here. the issue here is, that the value is only written in sysfs file, if you open the additional devicesettings. It don\u0027t restores the values in Startup-routine. Which is IMO not correct. If we don\u0027t want this, behaviour,  we can make maybe another overlay, with which maintainer can decide, whats the desired behaviour. But also we should check, if the Strenght-type is existent and then exec. it. currently we exec. for all 3 vibrator-types.",
+      "parentUuid": "8e440da7_d72f5699",
+      "revId": "45b7ddc22911e95042ef06d2ba4025e4d0a51eec",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
     }
   ]
 }
