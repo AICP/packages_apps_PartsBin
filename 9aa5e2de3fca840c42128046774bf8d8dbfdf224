@@ -16,6 +16,24 @@
       "message": "Not enough yet. It goes to default value defined in overlay - 3 in my case, instead of choosen by user custom value. How did I tested: \n\nSet vib strenght to custom value. \nCheck sysfs file in root explorer. Says 1. \nReboot. \nCheck again sysfs file: says 3.  \nEnter Advanced device settings menu. Check sysfs file: it\u0027s now 1.\n",
       "revId": "9aa5e2de3fca840c42128046774bf8d8dbfdf224",
       "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb6e2461_d0f1f96e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1375
+      },
+      "writtenOn": "2021-03-25T11:46:32Z",
+      "side": 1,
+      "message": "no, this is what this patch is fixing...",
+      "parentUuid": "8935d5dd_360a0b14",
+      "revId": "9aa5e2de3fca840c42128046774bf8d8dbfdf224",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
     }
   ]
 }
