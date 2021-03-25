@@ -94,17 +94,23 @@ public class Startup extends BroadcastReceiver {
             enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_NIGHT_SWITCH, false);
             Settings.System.putInt(resolver, NightModeSwitch.SETTINGS_KEY, enabled ? 1 : 0);
 
-            String vibrSystemStrength = sharedPrefs.getString(DeviceSettings.KEY_SYSTEM_VIBSTRENGTH, VibratorSystemStrengthPreference.getDefaultValue(context));
-            Settings.System.putString(resolver, VibratorSystemStrengthPreference.SETTINGS_KEY, vibrSystemStrength);
-            restore(VibratorSystemStrengthPreference.getFile(context), vibrSystemStrength);
+            if (!context.getResources().getString(R.string.pathSystemVibStrength).isEmpty()) {
+                String vibrSystemStrength = sharedPrefs.getString(DeviceSettings.KEY_SYSTEM_VIBSTRENGTH, VibratorSystemStrengthPreference.getDefaultValue(context));
+                Settings.System.putString(resolver, VibratorSystemStrengthPreference.SETTINGS_KEY, vibrSystemStrength);
+                restore(VibratorSystemStrengthPreference.getFile(context), vibrSystemStrength);
+            }
 
-            String vibrCallStrength = sharedPrefs.getString(DeviceSettings.KEY_CALL_VIBSTRENGTH, VibratorCallStrengthPreference.getDefaultValue(context));
-            Settings.System.putString(resolver, VibratorCallStrengthPreference.SETTINGS_KEY, vibrCallStrength);
-            restore(VibratorCallStrengthPreference.getFile(context), vibrCallStrength);
+            if (!context.getResources().getString(R.string.pathCallVibStrength).isEmpty()) {
+                String vibrCallStrength = sharedPrefs.getString(DeviceSettings.KEY_CALL_VIBSTRENGTH, VibratorCallStrengthPreference.getDefaultValue(context));
+                Settings.System.putString(resolver, VibratorCallStrengthPreference.SETTINGS_KEY, vibrCallStrength);
+                restore(VibratorCallStrengthPreference.getFile(context), vibrCallStrength);
+           }
 
-            String vibrNotifStrength = sharedPrefs.getString(DeviceSettings.KEY_NOTIF_VIBSTRENGTH, VibratorNotifStrengthPreference.getDefaultValue(context));
-            Settings.System.putString(resolver, VibratorNotifStrengthPreference.SETTINGS_KEY, vibrNotifStrength);
-            restore(VibratorNotifStrengthPreference.getFile(context), vibrNotifStrength);
+            if (!context.getResources().getString(R.string.pathNotifVibStrength).isEmpty()) {
+                String vibrNotifStrength = sharedPrefs.getString(DeviceSettings.KEY_NOTIF_VIBSTRENGTH, VibratorNotifStrengthPreference.getDefaultValue(context));
+                Settings.System.putString(resolver, VibratorNotifStrengthPreference.SETTINGS_KEY, vibrNotifStrength);
+                restore(VibratorNotifStrengthPreference.getFile(context), vibrNotifStrength);
+           }
 
             String audioEarpieceGain = sharedPrefs.getString(DeviceSettings.KEY_EARPIECE_GAIN, EarpieceGainPreference.getDefaultValue(context));
             Settings.System.putString(resolver, EarpieceGainPreference.SETTINGS_KEY, audioEarpieceGain);
@@ -244,11 +250,17 @@ public class Startup extends BroadcastReceiver {
                       HeadphoneGainPreference.SETTINGS_KEY));
         restore(SpeakerGainPreference.getFile(context), Settings.System.getString(resolver,
                       SpeakerGainPreference.SETTINGS_KEY));
-        restore(VibratorSystemStrengthPreference.getFile(context), Settings.System.getString(context.getContentResolver(),
-                      VibratorSystemStrengthPreference.SETTINGS_KEY));
-        restore(VibratorNotifStrengthPreference.getFile(context), Settings.System.getString(context.getContentResolver(),
-                      VibratorNotifStrengthPreference.SETTINGS_KEY));
-        restore(VibratorCallStrengthPreference.getFile(context), Settings.System.getString(context.getContentResolver(),
-                      VibratorCallStrengthPreference.SETTINGS_KEY));
+        if (!context.getResources().getString(R.string.pathSystemVibStrength).isEmpty()) {
+            restore(VibratorSystemStrengthPreference.getFile(context), Settings.System.getString(context.getContentResolver(),
+                          VibratorSystemStrengthPreference.SETTINGS_KEY));
+        }
+        if (!context.getResources().getString(R.string.pathNotifVibStrength).isEmpty()) {
+            restore(VibratorNotifStrengthPreference.getFile(context), Settings.System.getString(context.getContentResolver(),
+                          VibratorNotifStrengthPreference.SETTINGS_KEY));
+        }
+        if (!context.getResources().getString(R.string.pathCallVibStrength).isEmpty()) {
+            restore(VibratorCallStrengthPreference.getFile(context), Settings.System.getString(context.getContentResolver(),
+                          VibratorCallStrengthPreference.SETTINGS_KEY));
+        }
     }
 }
