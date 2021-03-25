@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "346ee92b_8bfec108",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2021-03-25T17:15:21Z",
+      "side": 1,
+      "message": "tested with next commit also. Now It\u0027s 1 again. As I set it. So. works great. ",
+      "revId": "3c55634248da98313bb3ca2e412ab32fbc260d67",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    }
+  ]
+}
