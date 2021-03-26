@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06222864_15311f05",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1375
+      },
+      "writtenOn": "2021-03-26T11:56:50Z",
+      "side": 1,
+      "message": "latest PS works now also as expected on enchilada.\n@Doc: framerate is  working properly on hotdog.\nTest was: 1. setup framerate in add. device settings 2. reboot 3. activate refreshrate in dev. settings.",
+      "revId": "2c979a48ebdb2383c64437501fe1afd1e9b72d02",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    }
+  ]
+}
