@@ -45,19 +45,18 @@
     <PreferenceCategory
         android:key="category_graphics"
         android:title="@string/graphics_title">
-        <SwitchPreference
+        <com.aicp.gear.preference.SelfRemovingSwitchPreference
             android:key="dcd"
             android:summary="@string/dcd_mode_summary"
             android:icon="@drawable/ic_dc"
             android:title="@string/dcd_mode_title" />
-        <SwitchPreference
+        <com.aicp.gear.preference.SelfRemovingSwitchPreference
             android:key="hbm"
             android:summary="@string/hbm_mode_summary"
             android:icon="@drawable/ic_hbm"
             android:title="@string/hbm_mode_title"
             android:persistent="false" />
-
-        <Preference
+        <com.aicp.gear.preference.SelfRemovingPreference
             android:key="panel_category"
             android:title="@string/panel_category_title"
             android:icon="@drawable/ic_panel"
@@ -66,7 +65,7 @@
             <intent android:action="android.intent.action.MAIN"
                     android:targetPackage="com.aicp.device"
                     android:targetClass="com.aicp.device.PanelSettingsActivity" />
-        </Preference>
+        </com.aicp.gear.preference.SelfRemovingPreference>
     </PreferenceCategory>
 
     <PreferenceCategory
