@@ -19,7 +19,7 @@
 
     <com.aicp.gear.preference.SelfRemovingPreferenceCategory
         android:key="category_audio"
-        aicpextras:requiresConfig="@bool/config_device_supports_soundtuner"
+        aicpextras:requiresPackageInstalled="@string/dolby_atmos_packagename"
         android:title="@string/category_audio">
         <SwitchPreference
             android:key="enable_dolby_atmos"

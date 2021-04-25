@@ -103,9 +103,13 @@ public class DeviceSettings extends PreferenceFragment implements
     public static final String KEY_FASTCHARGE_SWITCH = "fastcharge";
     private static final String KEY_PEAK_REFRESH_RATE = "peakrefreshrate";
     private static final String KEY_MIN_REFRESH_RATE = "minrefreshrate";
-    private static final String KEY_ENABLE_DOLBY_ATMOS = "enable_dolby_atmos";
     public static final String KEY_OFFSCREEN_GESTURES = "gesture_category";
     public static final String KEY_PANEL_SETTINGS = "panel_category";
+
+    private static final String KEY_ENABLE_DOLBY_ATMOS = "enable_dolby_atmos";
+    private static final String KEY_DOLBY_ATMOS_CONFIG = "dolby_atmos";
+    private static final String DOLBY_ATMOS_PKG = "com.dolby.daxservice";
+
     public static final String SLIDER_DEFAULT_VALUE = "2,1,0";
 
     public static final String KEY_SETTINGS_PREFIX = "device_setting_";
@@ -172,6 +176,9 @@ public class DeviceSettings extends PreferenceFragment implements
         if (soundCategory != null) {
             mEnableDolbyAtmos = (SwitchPreference) findPreference(KEY_ENABLE_DOLBY_ATMOS);
             mEnableDolbyAtmos.setOnPreferenceChangeListener(this);
+            if (!isOpSoundTunerInstalled()) {
+                soundCategory.removePreference(soundCategory.findPreference(KEY_DOLBY_ATMOS_CONFIG));
+            }
         }
 
         mHWKSwitch = (TwoStatePreference) findPreference(KEY_HWK_SWITCH);
@@ -399,7 +406,7 @@ public class DeviceSettings extends PreferenceFragment implements
         } else if (preference == mEnableDolbyAtmos) {
           boolean enabled = (Boolean) newValue;
           Intent daxService = new Intent();
-          ComponentName name = new ComponentName("com.dolby.daxservice", "com.dolby.daxservice.DaxService");
+          ComponentName name = new ComponentName(DOLBY_ATMOS_PKG, DOLBY_ATMOS_PKG + ".DaxService");
           daxService.setComponent(name);
           if (enabled) {
               // enable service component and start service
@@ -452,5 +459,11 @@ public class DeviceSettings extends PreferenceFragment implements
                     Settings.System.OMNI_BUTTON_EXTRA_KEY_MAPPING, newValue);
         } catch (Exception e) {
         }
+    }
+
+    private boolean isOpSoundTunerInstalled() {
+        return PackageUtils.isPackageAvailable(getActivity(),
+            getContext().getResources()
+                .getString(R.string.sound_tuner_packagename));
     }
 }
