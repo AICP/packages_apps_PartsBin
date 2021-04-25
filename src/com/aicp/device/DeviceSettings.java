@@ -91,9 +91,13 @@ public class DeviceSettings extends PreferenceFragment implements
     public static final String KEY_FASTCHARGE_SWITCH = "fastcharge";
     public static final String KEY_REFRESH_RATE = "refresh_rate";
     public static final String KEY_AUTO_REFRESH_RATE = "auto_refresh_rate";
-    private static final String KEY_ENABLE_DOLBY_ATMOS = "enable_dolby_atmos";
     public static final String KEY_OFFSCREEN_GESTURES = "gesture_category";
     public static final String KEY_PANEL_SETTINGS = "panel_category";
+
+    private static final String KEY_ENABLE_DOLBY_ATMOS = "enable_dolby_atmos";
+    private static final String KEY_DOLBY_ATMOS_CONFIG = "dolby_atmos";
+    private static final String DOLBY_ATMOS_PKG = "com.dolby.daxservice";
+
     public static final String SLIDER_DEFAULT_VALUE = "2,1,0";
 
     public static final String KEY_SETTINGS_PREFIX = "device_setting_";
@@ -132,8 +136,6 @@ public class DeviceSettings extends PreferenceFragment implements
                 getBoolean(com.android.internal.R.bool.config_hasAlertSlider);
         boolean supportsGestures = getContext().getResources().getBoolean(R.bool.config_device_supports_gestures);
         boolean supportsPanels = getContext().getResources().getBoolean(R.bool.config_device_supports_panels);
-        boolean supportsSoundtuner = getContext().getResources()
-                .getBoolean(R.bool.config_device_supports_soundtuner);
         boolean supportsRefreshrate = getContext().getResources()
                 .getBoolean(R.bool.config_device_supports_switch_refreshrate);
 
@@ -163,12 +165,13 @@ public class DeviceSettings extends PreferenceFragment implements
             sliderCategory.getParent().removePreference(sliderCategory);
         }
 
-        if (supportsSoundtuner) {
-            mEnableDolbyAtmos = (SwitchPreference) findPreference(KEY_ENABLE_DOLBY_ATMOS);
-            mEnableDolbyAtmos.setOnPreferenceChangeListener(this);
-        } else {
-            PreferenceCategory soundCategory = (PreferenceCategory) findPreference(KEY_AUDIO_CATEGORY);
+        PreferenceCategory soundCategory = (PreferenceCategory) findPreference(KEY_AUDIO_CATEGORY);
+        mEnableDolbyAtmos = (SwitchPreference) findPreference(KEY_ENABLE_DOLBY_ATMOS);
+        mEnableDolbyAtmos.setOnPreferenceChangeListener(this);
+        if (!isDolbyAtmosInstalled()) {
             soundCategory.getParent().removePreference(soundCategory);
+        } else if (!isOpSoundTunerInstalled()) {
+            soundCategory.removePreference(soundCategory.findPreference(KEY_DOLBY_ATMOS_CONFIG));
         }
 
         mHWKSwitch = (TwoStatePreference) findPreference(KEY_HWK_SWITCH);
@@ -365,7 +368,7 @@ public class DeviceSettings extends PreferenceFragment implements
         } else if (preference == mEnableDolbyAtmos) {
           boolean enabled = (Boolean) newValue;
           Intent daxService = new Intent();
-          ComponentName name = new ComponentName("com.dolby.daxservice", "com.dolby.daxservice.DaxService");
+          ComponentName name = new ComponentName(DOLBY_ATMOS_PKG, DOLBY_ATMOS_PKG + ".DaxService");
           daxService.setComponent(name);
           if (enabled) {
               // enable service component and start service
@@ -418,5 +421,13 @@ public class DeviceSettings extends PreferenceFragment implements
                     Settings.System.OMNI_BUTTON_EXTRA_KEY_MAPPING, newValue);
         } catch (Exception e) {
         }
+    }
+
+    private boolean isDolbyAtmosInstalled() {
+        return PackageUtils.isPackageAvailable(getActivity(), DOLBY_ATMOS_PKG);
+    }
+
+    private boolean isOpSoundTunerInstalled() {
+        return PackageUtils.isPackageAvailable(getActivity(), "com.oneplus.sound.tuner");
     }
 }
