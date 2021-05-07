@@ -34,4 +34,9 @@
         <item>5</item>
         <item>6</item>
     </string-array>
+
+    <string-array name="peak_refresh_rate_values" translatable="false">
+        <item>60</item>
+        <item>90</item>
+    </string-array>
 </resources>
