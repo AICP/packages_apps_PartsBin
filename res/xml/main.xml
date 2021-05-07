@@ -14,7 +14,8 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aicpextras="http://schemas.android.com/apk/res-auto" >
 
     <PreferenceCategory
         android:key="category_audio"
@@ -83,6 +84,25 @@
             android:title="@string/refresh_rate_title"
             android:summary="@string/refresh_rate_summary"
             android:persistent="false" />
+
+        <com.aicp.gear.preference.LabeledSeekBarPreference
+            android:key="display_peak_refresh_rate"
+            android:title="@string/display_peak_refresh_rate_title"
+            android:max="2"
+            android:selectable="true"
+            aicpextras:textStart="@string/display_peak_refresh_rate_low_label"
+            aicpextras:textEnd="@string/display_peak_refresh_rate_high_label"
+            android:persistent="true"/>
+
+        <com.aicp.gear.preference.LabeledSeekBarPreference
+            android:key="display_min_refresh_rate"
+            android:title="@string/display_min_refresh_rate_title"
+            android:max="2"
+            android:selectable="true"
+            aicpextras:textStart="@string/display_min_refresh_rate_low_label"
+            aicpextras:textEnd="@string/display_min_refresh_rate_high_label"
+            android:persistent="true"/>
+
         <Preference
             android:icon="@drawable/ic_info"
             android:persistent="false"

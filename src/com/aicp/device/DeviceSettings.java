@@ -24,6 +24,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -42,10 +43,13 @@ import androidx.preference.PreferenceScreen;
 import androidx.preference.TwoStatePreference;
 import androidx.preference.SwitchPreference;
 
+import com.aicp.gear.preference.LabeledSeekBarPreference;
 import com.android.internal.util.aicp.PackageUtils;
 
 public class DeviceSettings extends PreferenceFragment implements
         Preference.OnPreferenceChangeListener {
+
+    public static final String TAG = "AicpDeviceSettingsFragment";
 
     public static final String GESTURE_HAPTIC_SETTINGS_VARIABLE_NAME = "OFF_GESTURE_HAPTIC_ENABLE";
     public static final String GESTURE_MUSIC_PLAYBACK_SETTINGS_VARIABLE_NAME = "MUSIC_PLAYBACK_GESTURE_ENABLE";
@@ -91,6 +95,8 @@ public class DeviceSettings extends PreferenceFragment implements
     public static final String KEY_FASTCHARGE_SWITCH = "fastcharge";
     public static final String KEY_REFRESH_RATE = "refresh_rate";
     public static final String KEY_AUTO_REFRESH_RATE = "auto_refresh_rate";
+    public static final String KEY_DISPLAY_PEAK_REFRESH_RATE = "display_peak_refresh_rate";
+    public static final String KEY_DISPLAY_MIN_REFRESH_RATE = "display_min_refresh_rate";
     private static final String KEY_ENABLE_DOLBY_ATMOS = "enable_dolby_atmos";
     public static final String KEY_OFFSCREEN_GESTURES = "gesture_category";
     public static final String KEY_PANEL_SETTINGS = "panel_category";
@@ -128,14 +134,13 @@ public class DeviceSettings extends PreferenceFragment implements
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.main, rootKey);
 
-        boolean hasAlertSlider = getContext().getResources().
-                getBoolean(com.android.internal.R.bool.config_hasAlertSlider);
-        boolean supportsGestures = getContext().getResources().getBoolean(R.bool.config_device_supports_gestures);
-        boolean supportsPanels = getContext().getResources().getBoolean(R.bool.config_device_supports_panels);
-        boolean supportsSoundtuner = getContext().getResources()
-                .getBoolean(R.bool.config_device_supports_soundtuner);
-        boolean supportsRefreshrate = getContext().getResources()
-                .getBoolean(R.bool.config_device_supports_switch_refreshrate);
+        final Resources res = getContext().getResources();
+
+        boolean hasAlertSlider = res.getBoolean(com.android.internal.R.bool.config_hasAlertSlider);
+        boolean supportsGestures = res.getBoolean(R.bool.config_device_supports_gestures);
+        boolean supportsPanels = res.getBoolean(R.bool.config_device_supports_panels);
+        boolean supportsSoundtuner = res.getBoolean(R.bool.config_device_supports_soundtuner);
+        boolean supportsRefreshrate = res.getBoolean(R.bool.config_device_supports_switch_refreshrate);
 
         if (hasAlertSlider) {
             mSliderModeTop = (ListPreference) findPreference(KEY_SLIDER_MODE_TOP);
@@ -254,6 +259,8 @@ public class DeviceSettings extends PreferenceFragment implements
         }
         if (graphicsRemoved == 3) graphicsCategory.getParent().removePreference(graphicsCategory);
 
+        final LabeledSeekBarPreference refreshRatePeakPref = findPreference(KEY_DISPLAY_PEAK_REFRESH_RATE);
+        final LabeledSeekBarPreference refreshRateMinPref = findPreference(KEY_DISPLAY_MIN_REFRESH_RATE);
         if (supportsRefreshrate) {
             mAutoRefreshRate = (TwoStatePreference) findPreference(KEY_AUTO_REFRESH_RATE);
             mAutoRefreshRate.setChecked(AutoRefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
@@ -263,6 +270,11 @@ public class DeviceSettings extends PreferenceFragment implements
             mRefreshRate.setEnabled(!AutoRefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
             mRefreshRate.setChecked(RefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
             mRefreshRate.setOnPreferenceChangeListener(new RefreshRateSwitch(getContext()));
+
+            initRefreshRatePref(refreshRatePeakPref, Settings.System.PEAK_REFRESH_RATE, res.obtainTypedArray(
+                R.array.config_displayPeakRefreshRates));
+            initRefreshRatePref(refreshRateMinPref, Settings.System.MIN_REFRESH_RATE, res.obtainTypedArray(
+                R.array.config_displayMinRefreshRates));
         } else {
             PreferenceCategory refreshCategory = (PreferenceCategory) findPreference(KEY_CATEGORY_REFRESH);
             refreshCategory.getParent().removePreference(refreshCategory);
@@ -335,6 +347,39 @@ public class DeviceSettings extends PreferenceFragment implements
             countVibRemoved += 1;
         }
         if (countVibRemoved == 3) vibratorCategory.getParent().removePreference(vibratorCategory);
+    }
+
+    private void initRefreshRatePref(LabeledSeekBarPreference pref, String settingsKey, TypedArray ratesArray) {
+        final float[] refreshRates = getFloatArray(ratesArray);
+
+        if (refreshRates.length > 1) {
+              pref.setContinuousUpdates(true);
+              final float initScale = Settings.System.getFloat(
+                      getContext().getContentResolver(), settingsKey, 60.0f);
+
+              // Find the closest value to initScale
+              float minDistance = Float.MAX_VALUE;
+              int minDistanceIndex = -1;
+              final float[] prefScales = refreshRates;
+              for (int i = 0; i < prefScales.length; i++) {
+                  float d = Math.abs(prefScales[i] - initScale);
+                  if (d < minDistance) {
+                      minDistance = d;
+                      minDistanceIndex = i;
+                  }
+              }
+              pref.setMax(prefScales.length-1);
+              pref.setProgress(minDistanceIndex);
+              pref.setOnPreferenceChangeStopListener((p, v) -> {
+                  final float scale = prefScales[(int) v];
+                  Settings.System.putFloat(getContext().getContentResolver(), settingsKey, scale);
+                  Log.i(TAG, "Saving refresh rate of " + scale + " to " + settingsKey);
+                  return true;
+              });
+        } else {
+              PreferenceCategory refreshCategory = (PreferenceCategory) findPreference(KEY_CATEGORY_REFRESH);
+              refreshCategory.removePreference(pref);
+        }
     }
 
     @Override
@@ -418,5 +463,15 @@ public class DeviceSettings extends PreferenceFragment implements
                     Settings.System.OMNI_BUTTON_EXTRA_KEY_MAPPING, newValue);
         } catch (Exception e) {
         }
+    }
+
+    private static float[] getFloatArray(TypedArray array) {
+        int length = array.length();
+        float[] floatArray = new float[length];
+        for (int i = 0; i < length; i++) {
+            floatArray[i] = array.getFloat(i, 1.0f);
+        }
+        array.recycle();
+        return floatArray;
     }
 }

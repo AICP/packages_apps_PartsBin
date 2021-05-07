@@ -34,4 +34,19 @@
         <item>5</item>
         <item>6</item>
     </string-array>
+
+    <!-- Display variable refresh rate values
+        Each major frequency that is setable as peak should be listed
+        A single item means device doesnt support variable refresh rate.
+        For example:
+        60
+        90
+        120  -->
+    <array name="config_displayPeakRefreshRates">
+        <item>60</item>
+    </array>
+
+    <array name="config_displayMinRefreshRates">
+        <item>60</item>
+    </array>
 </resources>
