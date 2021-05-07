@@ -73,17 +73,6 @@
     <PreferenceCategory
         android:key="category_refresh"
         android:title="@string/refresh_title">
-        <SwitchPreference
-            android:key="auto_refresh_rate"
-            android:title="@string/auto_refresh_rate_title"
-            android:icon="@drawable/ic_refresh"
-            android:summary="@string/auto_refresh_rate_summary"
-            android:persistent="true" />
-        <SwitchPreference
-            android:key="refresh_rate"
-            android:title="@string/refresh_rate_title"
-            android:summary="@string/refresh_rate_summary"
-            android:persistent="false" />
 
         <com.aicp.gear.preference.LabeledSeekBarPreference
             android:key="display_peak_refresh_rate"
