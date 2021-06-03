@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "965150da_9c93f81b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 343
+      },
+      "writtenOn": "2021-06-03T19:57:58Z",
+      "side": 1,
+      "message": "we could implement some if then. worst case a separate java, that gets only called when building op7\u0027s like with the key handler.\n(just throwing in ideas here)",
+      "revId": "f05e747b94c77f78dbc453d0b1cacba1c8bba726",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    }
+  ]
+}
