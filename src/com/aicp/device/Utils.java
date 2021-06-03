@@ -211,6 +211,26 @@ public class Utils {
     /**
      * @param filename      file to read
      * @param defValue      default value
+     * @return              treu / false
+     */
+    public static boolean getFileValueAsBooleanHBM(String filename, boolean defValue) {
+        String fileValue = readLine(filename);
+        if(fileValue!=null){
+            if (fileValue.matches(".*[hbm mode].*")){
+            /* on some sysfs nodes we have some key=value formats. But we only expect a single value,
+               so lets cut it out */
+                if (DEBUG) Log.d(TAG,"getFileValueAsBoolean: *hbm mode* found in sysfs node cutting it out");
+                // needed for op devices. node format is hbm mode = X
+                fileValue = fileValue.replace("hbm mode = ", "");
+            }
+            return (fileValue.equals("0")?false:true);
+        }
+        return defValue;
+    }
+
+    /**
+     * @param filename      file to read
+     * @param defValue      default value
      * @return              content of file or default value
      */
     public static String getFileValue(String filename, String defValue) {
