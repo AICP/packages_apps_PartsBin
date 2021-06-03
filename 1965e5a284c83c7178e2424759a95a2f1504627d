@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d612a1c5_bc0d59da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1375
+      },
+      "writtenOn": "2021-06-03T19:04:47Z",
+      "side": 1,
+      "message": "fixed HBM toggle for OP7. now sure if we want to do this.\nWell, if shouldn\u0027t hurt, but this is only a special need for op7 kernels\nand we could do this is a special method and not punishing all other calls by this.",
+      "revId": "1965e5a284c83c7178e2424759a95a2f1504627d",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    }
+  ]
+}
