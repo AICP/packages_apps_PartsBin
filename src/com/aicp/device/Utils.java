@@ -203,6 +203,16 @@ public class Utils {
     public static boolean getFileValueAsBoolean(String filename, boolean defValue) {
         String fileValue = readLine(filename);
         if(fileValue!=null){
+            if (fileValue.matches(".*[=].*")){
+            /* on some sysfs nodes we have some key=value formats. But we only expect a single value,
+               so lets cut it out */
+                if (DEBUG) Log.d(TAG,"getFileValueAsBoolean: = found cutting it out");
+		fileValue = fileValue.replace("=", "");
+		fileValue = fileValue.replaceAll("\\s+", "");
+                // needed for op7 devices. node format is hbm mode = XX
+		fileValue = fileValue.replace("hbmmode", "");
+		Log.d(TAG,"VEIT: "+fileValue);
+            }
             return (fileValue.equals("0")?false:true);
         }
         return defValue;
