@@ -1,6 +1,6 @@
 /*
 * Copyright (C) 2016 The OmniROM Project
-* Copyright (C) 2020 The Android Ice Cold Project
+* Copyright (C) 2021 The Android Ice Cold Project
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import android.content.Context;
 import android.provider.Settings;
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
+import java.lang.Integer;
 
 public class HBMModeSwitch implements OnPreferenceChangeListener {
 
@@ -56,7 +57,7 @@ public class HBMModeSwitch implements OnPreferenceChangeListener {
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         Boolean enabled = (Boolean) newValue;
-        Settings.System.putInt(mContext.getContentResolver(), SETTINGS_KEY, enabled ? 1 : 0);
+        Settings.System.putInt(mContext.getContentResolver(), SETTINGS_KEY, enabled ? Integer.parseInt(mHBMOnState) : Integer.parseInt(mHBMOffState));
         Utils.writeValue(getFile(mContext), enabled ? mHBMOnState : mHBMOffState);
         return true;
     }
