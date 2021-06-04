@@ -222,7 +222,13 @@ public class Startup extends BroadcastReceiver {
         restore(WideModeSwitch.getFile(context), enabled);
 
         enabled = Settings.System.getInt(resolver, HBMModeSwitch.SETTINGS_KEY, 0) != 0;
-        restore(HBMModeSwitch.getFile(context), enabled);
+        String mHBMvalue;
+        if (enabled){
+            mHBMvalue = context.getResources().getString(R.string.hbmON);
+        }else{
+            mHBMvalue = context.getResources().getString(R.string.hbmOFF);
+        }
+        restore(HBMModeSwitch.getFile(context), mHBMvalue);
 
         enabled = Settings.System.getInt(resolver, NightModeSwitch.SETTINGS_KEY, 0) != 0;
         restore(NightModeSwitch.getFile(context), enabled);
