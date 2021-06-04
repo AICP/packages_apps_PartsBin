@@ -26,6 +26,7 @@ import android.content.res.Resources;
 import androidx.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.TextUtils;
+import java.lang.Integer;
 
 public class Startup extends BroadcastReceiver {
     private static void restore(String file, boolean enabled) {
@@ -221,8 +222,9 @@ public class Startup extends BroadcastReceiver {
         enabled = Settings.System.getInt(resolver, WideModeSwitch.SETTINGS_KEY, 0) != 0;
         restore(WideModeSwitch.getFile(context), enabled);
 
-        enabled = Settings.System.getInt(resolver, HBMModeSwitch.SETTINGS_KEY, 0) != 0;
-        restore(HBMModeSwitch.getFile(context), enabled);
+        String hbmOffvalue = context.getResources().getString(R.string.hbmOFF);
+        Settings.System.putInt(resolver, HBMModeSwitch.SETTINGS_KEY, Integer.parseInt(hbmOffvalue));
+        restore(HBMModeSwitch.getFile(context), false);
 
         enabled = Settings.System.getInt(resolver, NightModeSwitch.SETTINGS_KEY, 0) != 0;
         restore(NightModeSwitch.getFile(context), enabled);
