@@ -382,6 +382,7 @@ public class KeyHandler implements CustomKeyHandler {
 
     private void onDisplayOff() {
         if (DEBUG) Log.i(TAG, "Display off");
+        Settings.System.putInt(mContext.getContentResolver(), HBMModeSwitch.SETTINGS_KEY, 0);
     }
 
     private void launchDozePulse() {
