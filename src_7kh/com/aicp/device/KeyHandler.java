@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2015-2016 The CyanogenMod Project
  * Copyright (C) 2017 The LineageOS Project
- * Copyright (C) 2020 Android Ice Cold Project
+ * Copyright (C) 2021 Android Ice Cold Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -382,6 +382,7 @@ public class KeyHandler implements CustomKeyHandler {
 
     private void onDisplayOff() {
         if (DEBUG) Log.i(TAG, "Display off");
+        Settings.System.putInt(mContext.getContentResolver(), HBMModeSwitch.SETTINGS_KEY, 0);
     }
 
     private void launchDozePulse() {
