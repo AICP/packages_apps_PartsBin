@@ -16,6 +16,23 @@
       "message": "tested on enchilada+hotdog",
       "revId": "dbd7056f699dead359686076dc6c70562fcc1ac9",
       "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c44463e2_f5fd0c22",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1375
+      },
+      "writtenOn": "2021-06-06T18:34:05Z",
+      "side": 1,
+      "message": "for enchilada, you need this:\nhttps://gerrit.aicp-rom.com/c/AICP/kernel_oneplus_sdm845/+/110305",
+      "revId": "dbd7056f699dead359686076dc6c70562fcc1ac9",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
     }
   ]
 }
