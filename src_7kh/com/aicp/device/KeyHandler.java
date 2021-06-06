@@ -24,6 +24,7 @@ import static android.provider.Settings.Global.ZEN_MODE_ALARMS;
 import static android.provider.Settings.Global.ZEN_MODE_NO_INTERRUPTIONS;
 
 import android.app.ActivityManagerNative;
+import android.app.Application;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -65,6 +66,8 @@ public class KeyHandler implements CustomKeyHandler {
     public static final String DYNAMIC_FPS_PATH = "/sys/class/drm/card0-DSI-1/dynamic_fps";
 
     protected final Context mContext;
+    private final Context mAppContext;
+    private static Application mApplication;
     private final PowerManager mPowerManager;
     private EventHandler mEventHandler;
     private WakeLock mGestureWakeLock;
@@ -101,6 +104,8 @@ public class KeyHandler implements CustomKeyHandler {
         IntentFilter screenStateFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
         mContext.registerReceiver(mScreenStateReceiver, screenStateFilter);
+        mApplication = new Application();
+        mAppContext = mApplication.getApplicationContext();
     }
 
     private class EventHandler extends Handler {
@@ -382,6 +387,7 @@ public class KeyHandler implements CustomKeyHandler {
 
     private void onDisplayOff() {
         if (DEBUG) Log.i(TAG, "Display off");
+        Settings.System.putInt(mAppContext.getContentResolver(), HBMModeSwitch.SETTINGS_KEY, 0);
     }
 
     private void launchDozePulse() {

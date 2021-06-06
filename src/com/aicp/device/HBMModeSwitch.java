@@ -50,7 +50,7 @@ public class HBMModeSwitch implements OnPreferenceChangeListener {
     }
 
     public static boolean isCurrentlyEnabled(Context context) {
-        return Utils.getFileValueAsBoolean(getFile(context), false);
+        return Settings.System.getInt(context.getContentResolver(), HBMModeSwitch.SETTINGS_KEY, 0)!= 0;
     }
 
     @Override
