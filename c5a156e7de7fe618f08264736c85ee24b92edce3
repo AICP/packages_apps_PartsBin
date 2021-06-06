@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca1da6b3_d679da06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-06-06T14:38:38Z",
+      "side": 1,
+      "message": "Rebased on and adapted to\nhttps://gerrit.aicp-rom.com/c/AICP/packages_apps_PartsBin/+/109732",
+      "revId": "c5a156e7de7fe618f08264736c85ee24b92edce3",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    }
+  ]
+}
