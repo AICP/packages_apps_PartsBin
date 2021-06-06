@@ -1,6 +1,6 @@
 /*
 * Copyright (C) 2016 The OmniROM Project
-* Copyright (C) 2020 The Android Ice Cold Project
+* Copyright (C) 2021 The Android Ice Cold Project
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -352,6 +352,7 @@ public class KeyHandler implements CustomKeyHandler {
 
     private void onDisplayOff() {
         if (DEBUG) Log.i(TAG, "Display off");
+        Settings.System.putInt(mContext.getContentResolver(), HBMModeSwitch.SETTINGS_KEY, 0);
     }
 
     private int getSliderAction(int position) {
