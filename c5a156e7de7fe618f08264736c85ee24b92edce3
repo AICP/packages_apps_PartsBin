@@ -16,6 +16,23 @@
       "message": "Rebased on and adapted to\nhttps://gerrit.aicp-rom.com/c/AICP/packages_apps_PartsBin/+/109732",
       "revId": "c5a156e7de7fe618f08264736c85ee24b92edce3",
       "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07d05cab_4e202ba5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 343
+      },
+      "writtenOn": "2021-06-09T19:34:25Z",
+      "side": 1,
+      "message": "merge it, then we have something we can use...🤗",
+      "revId": "c5a156e7de7fe618f08264736c85ee24b92edce3",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
     }
   ]
 }
