@@ -30,6 +30,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.media.IAudioService;
 import android.media.AudioManager;
 import android.media.session.MediaSessionLegacyHelper;
@@ -39,6 +40,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.os.FileObserver;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
@@ -52,7 +54,10 @@ import android.view.HapticFeedbackConstants;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.aicp.AicpVibe;
 import com.android.internal.util.aicp.CustomKeyHandler;
+import com.android.internal.util.aicp.PackageUtils;
 import com.android.internal.statusbar.IStatusBarService;
+
+import vendor.oneplus.hardware.camera.V1_0.IOnePlusCameraProvider;
 
 public class KeyHandler implements CustomKeyHandler {
 
@@ -64,6 +69,9 @@ public class KeyHandler implements CustomKeyHandler {
 
     public static final String DYNAMIC_FPS_PATH = "/sys/class/drm/card0-DSI-1/dynamic_fps";
 
+    public static final String CLIENT_PACKAGE_NAME = "com.oneplus.camera";
+    public static final String CLIENT_PACKAGE_PATH = "/data/misc/aicp/client_package_name";
+
     protected final Context mContext;
     private final PowerManager mPowerManager;
     private EventHandler mEventHandler;
@@ -72,21 +80,24 @@ public class KeyHandler implements CustomKeyHandler {
     private static boolean mButtonDisabled;
     private final NotificationManager mNotificationManager;
     private final AudioManager mAudioManager;
-    private boolean mDispOn;
     private boolean mTorchState = false;
     private boolean mUseSliderTorch = false;
+    private boolean mDispOn;
+    private ClientPackageNameObserver mClientObserver;
+    private IOnePlusCameraProvider mProvider;
+    private boolean isOPCameraAvail;
 
-    private BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {
-         @Override
-         public void onReceive(Context context, Intent intent) {
-             if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                 mDispOn = true;
-                 onDisplayOn();
-             } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                 mDispOn = false;
-                 onDisplayOff();
-             }
-         }
+    private BroadcastReceiver mSystemStateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                mDispOn = true;
+                onDisplayOn();
+            } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                mDispOn = false;
+                onDisplayOff();
+            }
+        }
     };
 
     public KeyHandler(Context context) {
@@ -98,9 +109,16 @@ public class KeyHandler implements CustomKeyHandler {
                 "GestureWakeLock");
         mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
-        IntentFilter screenStateFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
-        screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        mContext.registerReceiver(mScreenStateReceiver, screenStateFilter);
+
+        IntentFilter systemStateFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        systemStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        mContext.registerReceiver(mSystemStateReceiver, systemStateFilter);
+
+        isOPCameraAvail = PackageUtils.isPackageAvailable(context, "com.oneplus.camera");
+        if (isOPCameraAvail) {
+            mClientObserver = new ClientPackageNameObserver(CLIENT_PACKAGE_PATH);
+            mClientObserver.startWatching();
+        }
     }
 
     private class EventHandler extends Handler {
@@ -374,17 +392,6 @@ public class KeyHandler implements CustomKeyHandler {
         return false;
     }
 
-    private void onDisplayOn() {
-        if (DEBUG) Log.i(TAG, "Display on");
-
-        Utils.writeValue(DYNAMIC_FPS_PATH, "90");
-    }
-
-    private void onDisplayOff() {
-        if (DEBUG) Log.i(TAG, "Display off");
-        Settings.System.putInt(mContext.getContentResolver(), HBMModeSwitch.SETTINGS_KEY, 0);
-    }
-
     private void launchDozePulse() {
         // Note: Only works with ambient display enabled.
         mContext.sendBroadcastAsUser(new Intent(Constants.DOZE_INTENT),
@@ -426,5 +433,42 @@ public class KeyHandler implements CustomKeyHandler {
             Log.w(TAG, "Unable to find IAudioService interface.");
         }
         return audioService;
+    }
+
+    private void onDisplayOn() {
+        if (DEBUG) Log.i(TAG, "Display on");
+        if ((mClientObserver == null) && (isOPCameraAvail)) {
+            mClientObserver = new ClientPackageNameObserver(CLIENT_PACKAGE_PATH);
+            mClientObserver.startWatching();
+        }
+    }
+
+    private void onDisplayOff() {
+        if (DEBUG) Log.i(TAG, "Display off");
+        if (mClientObserver != null) {
+            mClientObserver.stopWatching();
+            mClientObserver = null;
+        }
+    }
+
+    private class ClientPackageNameObserver extends FileObserver {
+
+        public ClientPackageNameObserver(String file) {
+            super(CLIENT_PACKAGE_PATH, MODIFY);
+        }
+
+        @Override
+        public void onEvent(int event, String file) {
+            String pkgName = Utils.getFileValue(CLIENT_PACKAGE_PATH, "0");
+            if (event == FileObserver.MODIFY) {
+                try {
+                    Log.d(TAG, "client_package" + file + " and " + pkgName);
+                    mProvider = IOnePlusCameraProvider.getService();
+                    mProvider.setPackageName(pkgName);
+                } catch (RemoteException e) {
+                    Log.e(TAG, "setPackageName error", e);
+                }
+            }
+        }
     }
 }
