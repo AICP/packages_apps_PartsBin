@@ -33,6 +33,9 @@ LOCAL_USE_AAPT2 := true
 
 LOCAL_JAVA_LIBRARIES := telephony-common
 
+LOCAL_STATIC_JAVA_LIBRARIES := \
+    vendor.oneplus.hardware.camera-V1.0-java
+
 LOCAL_PROGUARD_ENABLED := disabled
 LOCAL_DEX_PREOPT := false
 
