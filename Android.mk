@@ -33,6 +33,11 @@ LOCAL_USE_AAPT2 := true
 
 LOCAL_JAVA_LIBRARIES := telephony-common
 
+ifeq ($(TARGET_DEVICE),$(filter $(TARGET_DEVICE),instantnoodle instantnoodlep kebab))
+LOCAL_STATIC_JAVA_LIBRARIES := \
+    vendor.oneplus.hardware.camera-V1.0-java
+endif
+
 LOCAL_PROGUARD_ENABLED := disabled
 LOCAL_DEX_PREOPT := false
 
