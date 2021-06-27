@@ -132,4 +132,8 @@
 
     <!-- Show/hide the QS tile, if device supports switching HighBrightness mode or not -->
     <bool name="enableHBMModeTile">false</bool>
+
+    <!-- Oneplus Camera Client package -->
+    <string name="opCamClientPackageName">"com.oneplus.camera"</string>
+    <string name="opCamClientPackagePath">"/data/misc/aicp/client_package_name"</string>
 </resources>
