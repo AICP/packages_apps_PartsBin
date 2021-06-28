@@ -16,6 +16,24 @@
       "message": "move this to line 22",
       "revId": "6e323e3f44d232ad30f7bc9455723ea5de6ba92d",
       "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fe4ea5f_c110ee1d",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2021-06-28T17:27:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8c39897_287d190a",
+      "revId": "6e323e3f44d232ad30f7bc9455723ea5de6ba92d",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
     }
   ]
 }
