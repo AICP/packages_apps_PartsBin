@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a75f2ab_69a8ea16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-06-29T15:01:45Z",
+      "side": 1,
+      "message": "I would add configs for these hardcoded variables\nCLIENT_PACKAGE_NAME\nCLIENT_PACKAGE_PATH\nand read them instead. ",
+      "revId": "24a11119827d31458d4ce3034e3d2b6f5d943cf9",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    }
+  ]
+}
