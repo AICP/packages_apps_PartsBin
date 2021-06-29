@@ -16,6 +16,23 @@
       "message": "I would add configs for these hardcoded variables\nCLIENT_PACKAGE_NAME\nCLIENT_PACKAGE_PATH\nand read them instead. ",
       "revId": "24a11119827d31458d4ce3034e3d2b6f5d943cf9",
       "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11201b46_5353b169",
+        "filename": "src_8kh/com/aicp/device/KeyHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-06-29T15:02:39Z",
+      "side": 1,
+      "message": "Same here. No need to hardcode",
+      "revId": "24a11119827d31458d4ce3034e3d2b6f5d943cf9",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
     }
   ]
 }
