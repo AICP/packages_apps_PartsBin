@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f479d90_b64d3c5f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2021-07-04T10:03:03Z",
+      "side": 1,
+      "message": "lost Screen off gestures, single tap and slider with PS4. So PS5 is roll back to PS3.",
+      "revId": "79baa8ab7df5984394bbaac62ae71f1c2f940b06",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    }
+  ]
+}
