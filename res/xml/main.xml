@@ -38,10 +38,31 @@
                  android:targetPackage="com.oneplus.sound.tuner"
                  android:targetClass="com.oneplus.sound.tuner.panoramic.DolbyPanoramicSoundActivity" />
         </Preference>
+
         <Preference
             android:icon="@drawable/ic_info"
             android:persistent="false"
             android:summary="@string/enable_sound_info" />
+    </com.aicp.gear.preference.SelfRemovingPreferenceCategory>
+
+    <com.aicp.gear.preference.SelfRemovingPreferenceCategory
+        android:key="dolby"
+        android:title="@string/dolby_category">
+
+        <Preference
+            android:key="audio_dolby_atmos"
+            android:icon="@drawable/ic_dolby_atmos"
+            android:title="@string/dolby_title"
+            android:summary="@string/dolby_summary">
+            <intent
+                 android:targetPackage="com.dolby.daxappui"
+                 android:targetClass="com.dolby.daxappui.MainActivity" />
+        </Preference>
+
+        <Preference
+            android:icon="@drawable/ic_info"
+            android:persistent="false"
+            android:summary="@string/dolby_info" />
     </com.aicp.gear.preference.SelfRemovingPreferenceCategory>
 
     <PreferenceCategory
