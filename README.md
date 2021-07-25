@@ -45,8 +45,9 @@ _Note that defining paths needs support in the kernel! Thus the features might n
 
 	Sweep to sleep (S2S): En-/disable to put the display to sleep by swiping from left to right in the lower section.
 
-	SoundTuner: En-/disable the proprietary SoundTuner (OnePlus specific)
-	[Note: Requires the needed vendor packages. Automatically appears when packages are correctly installed.]
+	SoundTuner: En-/disable the proprietary SoundTuner (Vendor specific)
+	[Note: Requires the needed vendor packages. Automatically appears when packages are correctly installed.
+               and defined by the strings mentioned below.]
 
 	HBMSwitch: High Brightness Mode toggle with configurable off-on values with additional QS tile
 
@@ -113,6 +114,15 @@ _Note that defining paths needs support in the kernel! Thus the features might n
 
 `<!-- Show/hide the QS tile, if device supports switching HighBrightness mode or not. Default value is false. -->`<br />
 `<bool name="enableHBMModeTile">false</bool>`<br />
+
+`<!-- Dolby atmos package -->`<br />
+`<string name="dolby_atmos_packagename">com.dolby.daxservice</string>`<br />
+
+`<!-- Sound tuner package -->`<br />
+`<string name="sound_tuner_packagename">com.oneplus.sound.tuner</string>`<br />
+
+`<!-- Dolby atmos classname -->`<br />
+`<string name="dolby_atmos_classname">com.oneplus.sound.tuner.panoramic.DolbyPanoramicSoundActivity</string>`<br />
 
 `<!-- Whether device supports disabling hwkeys -->`<br />
 `<string name="pathHWKToggle"> </string>`<br />
