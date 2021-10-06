@@ -31,7 +31,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class GestureSettingsActivity extends Activity {
+import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
+import com.android.settingslib.collapsingtoolbar.R;
+
+public class GestureSettingsActivity extends CollapsingToolbarBaseActivity {
 
     private GestureSettings mGestureSettingsFragment;
 
@@ -41,11 +44,11 @@ public class GestureSettingsActivity extends Activity {
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Fragment fragment = getFragmentManager().findFragmentById(android.R.id.content);
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.content_frame);
         if (fragment == null) {
             mGestureSettingsFragment = new GestureSettings();
             getFragmentManager().beginTransaction()
-                .add(android.R.id.content, mGestureSettingsFragment)
+                .add(R.id.content_frame, mGestureSettingsFragment)
                 .commit();
         } else {
             mGestureSettingsFragment = (GestureSettings) fragment;

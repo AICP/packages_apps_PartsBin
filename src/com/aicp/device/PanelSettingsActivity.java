@@ -30,7 +30,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class PanelSettingsActivity extends Activity {
+import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
+import com.android.settingslib.collapsingtoolbar.R;
+
+public class PanelSettingsActivity extends CollapsingToolbarBaseActivity {
     private PanelSettings mPanelSettingsFragment;
 
     @Override
@@ -39,11 +42,11 @@ public class PanelSettingsActivity extends Activity {
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Fragment fragment = getFragmentManager().findFragmentById(android.R.id.content);
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.content_frame);
         if (fragment == null) {
             mPanelSettingsFragment = new PanelSettings();
             getFragmentManager().beginTransaction()
-                .add(android.R.id.content, mPanelSettingsFragment)
+                .add(R.id.content_frame, mPanelSettingsFragment)
                 .commit();
         } else {
             mPanelSettingsFragment = (PanelSettings) fragment;
