@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfe892e6_b0dbaa9f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-02-06T15:21:46Z",
+      "side": 1,
+      "message": "Sorry George, didnt see you were working on it.\nI did a bit more cleaning\nhttps://gerrit.aicp-rom.com/c/AICP/packages_apps_PartsBin/+/113352\n",
+      "revId": "2b5a00a6567f61217c8f0b03db99d1ccc8782cd0",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    }
+  ]
+}
