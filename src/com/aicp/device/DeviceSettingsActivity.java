@@ -17,49 +17,19 @@
 */
 package com.aicp.device;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import androidx.preference.PreferenceFragment;
-import androidx.preference.PreferenceManager;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 
-public class DeviceSettingsActivity extends Activity {
+import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
+import com.android.settingslib.collapsingtoolbar.R;
 
-    private DeviceSettings mDeviceSettingsFragment;
-    
+public class DeviceSettingsActivity extends CollapsingToolbarBaseActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
-        Fragment fragment = getFragmentManager().findFragmentById(android.R.id.content);
-        if (fragment == null) {
-            mDeviceSettingsFragment = new DeviceSettings();
-            getFragmentManager().beginTransaction()
-                .add(android.R.id.content, mDeviceSettingsFragment)
-                .commit();
-        } else {
-            mDeviceSettingsFragment = (DeviceSettings) fragment;
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case android.R.id.home:
-            finish();
-            return true;
-        default:
-            break;
-        }
-        return super.onOptionsItemSelected(item);
+        getFragmentManager().beginTransaction()
+            .replace(R.id.content_frame, new DeviceSettings())
+            .commit();
     }
 }
