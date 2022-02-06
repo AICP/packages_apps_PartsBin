@@ -40,7 +40,10 @@
                 android:resource="@string/device_summary" />
         </activity>
 
-        <activity android:name=".KeyHandler" />
+        <activity
+            android:name="com.aicp.device.KeyHandler"
+            android:exported="false"
+            android:launchMode="singleTask" />
 
         <activity-alias
             android:name="com.aicp.device.DeviceSettings"
