@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ed19086_08e55074",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2022-03-03T16:41:08Z",
+      "side": 1,
+      "message": "PartBin doesn\u0027t work at all.",
+      "revId": "4e050cec4d12c139269110cb6bc39d3f372e71fc",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    }
+  ]
+}
