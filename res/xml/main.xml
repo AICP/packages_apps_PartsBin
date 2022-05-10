@@ -256,10 +256,10 @@
             android:persistent="false" />
     </com.aicp.gear.preference.SelfRemovingPreferenceCategory>
 
-    <PreferenceCategory
-        android:key="network"
-        android:title="@string/network_title">
-
+    <com.aicp.gear.preference.SelfRemovingPreferenceCategory
+        android:key="category_network"
+        android:title="@string/network_title"
+        aicpextras:requiresConfig="@bool/config_device_supports_network5gswitch">
         <ListPreference
             android:key="nr_mode_switcher"
             android:defaultValue="2"
@@ -273,6 +273,6 @@
             android:icon="@drawable/ic_info_outline"
             android:summary="@string/nr_mode_switcher_warning"
             android:persistent="false" />
-    </PreferenceCategory>
+    </com.aicp.gear.preference.SelfRemovingPreferenceCategory>
 
 </PreferenceScreen>

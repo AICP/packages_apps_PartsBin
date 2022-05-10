@@ -85,6 +85,7 @@ public class DeviceSettings extends PreferenceFragment implements
     private static final String KEY_POWER_CATEGORY = "category_power";
     private static final String KEY_AUDIOGAINS_CATEGORY = "category_audiogains";
     private static final String KEY_GAMEMODE_CATEGORY = "category_gamemode";
+    private static final String KEY_NETWORK_CATEGORY = "category_network";
 
     public static final String KEY_HEADPHONE_GAIN = "headphone_gain";
     public static final String KEY_EARPIECE_GAIN = "earpiece_gain";
@@ -375,8 +376,11 @@ public class DeviceSettings extends PreferenceFragment implements
             }
         }, getContext().BIND_AUTO_CREATE);
 
+        SelfRemovingPreferenceCategory networkCategory = (SelfRemovingPreferenceCategory) findPreference(KEY_NETWORK_CATEGORY);
+        if (networkCategory != null) {
         mNrModeSwitcher = (ListPreference) findPreference(KEY_NR_MODE_SWITCHER);
         mNrModeSwitcher.setOnPreferenceChangeListener(this);
+        }
     }
 
     private void initRefreshRatePreference(ListPreference preference, String key) {

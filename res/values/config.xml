@@ -29,6 +29,9 @@
     <!-- Whether device supports vibration options -->
     <bool name="config_device_supports_vibrations">false</bool>
 
+    <!-- Whether device supports 5G networks -->
+    <bool name="config_device_supports_network5gswitch">false</bool>
+
     <!-- Whether device supports disabling hwkeys -->
     <bool name="config_device_has_hw_nav_buttons">false</bool>
 
