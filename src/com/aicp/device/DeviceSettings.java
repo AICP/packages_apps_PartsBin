@@ -27,8 +27,11 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.telephony.SubscriptionManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
@@ -37,6 +40,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
@@ -49,6 +53,7 @@ import androidx.preference.SwitchPreference;
 import com.aicp.gear.preference.SelfRemovingPreference;
 import com.aicp.gear.preference.SelfRemovingPreferenceCategory;
 import com.android.internal.util.aicp.PackageUtils;
+import com.qualcomm.qcrilmsgtunnel.IQcrilMsgTunnel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,6 +119,8 @@ public class DeviceSettings extends PreferenceFragment implements
 
     public static final String SLIDER_DEFAULT_VALUE = "2,1,0";
 
+    public static final String KEY_NR_MODE_SWITCHER = "nr_mode_switcher";
+
     public static final String KEY_SETTINGS_PREFIX = "device_setting_";
 
     private VibratorSystemStrengthPreference mVibratorSystemStrength;
@@ -132,6 +139,7 @@ public class DeviceSettings extends PreferenceFragment implements
     private ListPreference mMinRefreshRatePref;
     private Preference mOffScreenGestures;
     private Preference mPanelSettings;
+    private static ListPreference mNrModeSwitcher;
     private static TwoStatePreference mHBMModeSwitch;
     private static TwoStatePreference mDCDModeSwitch;
     private static TwoStatePreference mHWKSwitch;
@@ -141,6 +149,7 @@ public class DeviceSettings extends PreferenceFragment implements
     private static TwoStatePreference mDoubleTapToWakeSwitch;
     private static TwoStatePreference mSweepToSleepSwitch;
     private static TwoStatePreference mSweepToWakeSwitch;
+    private Protocol mProtocol;
     private SwitchPreference mEnableDolbyAtmos;
 
     @Override
@@ -349,6 +358,25 @@ public class DeviceSettings extends PreferenceFragment implements
                 mVibratorNotifStrength.getParent().removePreference(mVibratorNotifStrength);
             }
         }
+
+        Intent mIntent = new Intent();
+        mIntent.setClassName("com.qualcomm.qcrilmsgtunnel", "com.qualcomm.qcrilmsgtunnel.QcrilMsgTunnelService");
+        getContext().bindService(mIntent, new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                IQcrilMsgTunnel tunnel = IQcrilMsgTunnel.Stub.asInterface(service);
+                if (tunnel != null)
+                    mProtocol = new Protocol(tunnel);
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                mProtocol = null;
+            }
+        }, getContext().BIND_AUTO_CREATE);
+
+        mNrModeSwitcher = (ListPreference) findPreference(KEY_NR_MODE_SWITCHER);
+        mNrModeSwitcher.setOnPreferenceChangeListener(this);
     }
 
     private void initRefreshRatePreference(ListPreference preference, String key) {
@@ -417,6 +445,9 @@ public class DeviceSettings extends PreferenceFragment implements
                     Float.valueOf((String) newValue));
             Log.i(TAG, "Updating Min RefreshRate to: " + Float.valueOf((String) newValue));
             updateRefreshRateSummary(mMinRefreshRatePref, MIN_REFRESH_RATE);
+        } else if (preference == mNrModeSwitcher) {
+            int mode = Integer.parseInt(newValue.toString());
+            return setNrModeChecked(mode);
         } else if (preference == mEnableDolbyAtmos) {
           boolean enabled = (Boolean) newValue;
           Intent daxService = new Intent();
@@ -479,5 +510,29 @@ public class DeviceSettings extends PreferenceFragment implements
         return PackageUtils.isPackageAvailable(getActivity(),
             getContext().getResources()
                 .getString(R.string.sound_tuner_packagename));
+    }
+
+    private boolean setNrModeChecked(int mode) {
+        if (mode == 0) {
+            return setNrModeChecked(Protocol.NR_5G_DISABLE_MODE_TYPE.NAS_NR5G_DISABLE_MODE_SA);
+        } else if (mode == 1) {
+            return setNrModeChecked(Protocol.NR_5G_DISABLE_MODE_TYPE.NAS_NR5G_DISABLE_MODE_NSA);
+        } else {
+            return setNrModeChecked(Protocol.NR_5G_DISABLE_MODE_TYPE.NAS_NR5G_DISABLE_MODE_NONE);
+        }
+    }
+
+    private boolean setNrModeChecked(Protocol.NR_5G_DISABLE_MODE_TYPE mode) {
+        if (mProtocol == null) {
+            Toast.makeText(getContext(), R.string.service_not_ready, Toast.LENGTH_LONG).show();
+            return false;
+        }
+        int index = SubscriptionManager.getSlotIndex(SubscriptionManager.getDefaultDataSubscriptionId());
+        if (index == SubscriptionManager.INVALID_SIM_SLOT_INDEX) {
+            Toast.makeText(getContext(), R.string.unavailable_sim_slot, Toast.LENGTH_LONG).show();
+            return false;
+        }
+        new Thread(() -> mProtocol.setNrMode(index, mode)).start();
+        return true;
     }
 }

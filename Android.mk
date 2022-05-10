@@ -19,7 +19,8 @@ ifeq ($(TARGET_DEVICE),$(filter $(TARGET_DEVICE),guacamole guacamoleb hotdog hot
     LOCAL_SRC_FILES += $(call all-java-files-under, src_7kh)
 endif
 ifeq ($(TARGET_DEVICE),$(filter $(TARGET_DEVICE),instantnoodle instantnoodlep kebab))
-    LOCAL_SRC_FILES += $(call all-java-files-under, src_8kh)
+    LOCAL_SRC_FILES += $(call all-java-files-under, src_8kh) $(call all-Iaidl-files-under, src)
+    LOCAL_AIDL_INCLUDES := $(call all-Iaidl-files-under, src)
 LOCAL_STATIC_JAVA_LIBRARIES := \
     vendor.oneplus.hardware.camera-V1.0-java
 endif
