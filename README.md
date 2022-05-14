@@ -88,6 +88,16 @@ _Note that defining paths needs support in the kernel! Thus the features might n
 	  - Zen mode: priority only, alarms only, do not disturb
 	  - Flashlight
 
+**5G Network Mode Switcher**
+
+        [Note: Currently available on Oneplus 8 devices.]
+
+        Possible selections:
+
+          - NSA (Non-StandAlone) only
+          - SA (StandAlone) only
+          - NSA + SA
+
 **Configurable overlays**
 
 `<!-- Whether the device has hardware navigation buttons (true/false) -->`<br />
@@ -98,10 +108,15 @@ _Note that defining paths needs support in the kernel! Thus the features might n
 
 `<!-- Whether device supports switching display refreshrates (true/false) -->`<br />
 `<bool name="config_device_supports_switch_refreshrate">false</bool>`<br />
+
 `<!-- Integer value of the minimal/base display refreshrate (usually 60) -->`<br />
 `<integer name="BaseRefresh">60</integer>`<br />
+
 `<!-- Integer value of the maximum/peak display refreshrate (e.g. 90) -->`<br />
 `<integer name="PeakRefresh"> </integer>`<br />
+
+`<!-- Whether device supports 5G networks (true/false). Default value is false. -->`<br />
+`<bool name="config_device_supports_network5gswitch"> </bool>`<br />
 
 `<!-- Show/hide the QS tile, if device supports DC Dimming or not. Default value is false. -->`<br />
 `<bool name="enableDCDTile">false</bool>`<br />
