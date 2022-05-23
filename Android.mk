@@ -8,7 +8,8 @@ LOCAL_STATIC_ANDROID_LIBRARIES := \
     AicpGear-preference \
     AicpGear-util
 
-LOCAL_SRC_FILES := $(call all-java-files-under, src)
+LOCAL_SRC_FILES := $(call all-java-files-under, src) $(call all-Iaidl-files-under, src)
+LOCAL_AIDL_INCLUDES := $(call all-Iaidl-files-under, src)
 ifeq ($(TARGET_DEVICE),$(filter $(TARGET_DEVICE),cheeseburger dumpling))
     LOCAL_SRC_FILES += $(call all-java-files-under, src_5kh)
 endif
@@ -19,8 +20,7 @@ ifeq ($(TARGET_DEVICE),$(filter $(TARGET_DEVICE),guacamole guacamoleb hotdog hot
     LOCAL_SRC_FILES += $(call all-java-files-under, src_7kh)
 endif
 ifeq ($(TARGET_DEVICE),$(filter $(TARGET_DEVICE),instantnoodle instantnoodlep kebab))
-    LOCAL_SRC_FILES += $(call all-java-files-under, src_8kh) $(call all-Iaidl-files-under, src)
-    LOCAL_AIDL_INCLUDES := $(call all-Iaidl-files-under, src)
+    LOCAL_SRC_FILES += $(call all-java-files-under, src_8kh)
 LOCAL_STATIC_JAVA_LIBRARIES := \
     vendor.oneplus.hardware.camera-V1.0-java
 endif

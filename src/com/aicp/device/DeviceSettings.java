@@ -360,24 +360,23 @@ public class DeviceSettings extends PreferenceFragment implements
             }
         }
 
-        Intent mIntent = new Intent();
-        mIntent.setClassName("com.qualcomm.qcrilmsgtunnel", "com.qualcomm.qcrilmsgtunnel.QcrilMsgTunnelService");
-        getContext().bindService(mIntent, new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                IQcrilMsgTunnel tunnel = IQcrilMsgTunnel.Stub.asInterface(service);
-                if (tunnel != null)
-                    mProtocol = new Protocol(tunnel);
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-                mProtocol = null;
-            }
-        }, getContext().BIND_AUTO_CREATE);
-
         SelfRemovingPreferenceCategory networkCategory = (SelfRemovingPreferenceCategory) findPreference(KEY_NETWORK_CATEGORY);
         if (networkCategory != null) {
+            Intent mIntent = new Intent();
+            mIntent.setClassName("com.qualcomm.qcrilmsgtunnel", "com.qualcomm.qcrilmsgtunnel.QcrilMsgTunnelService");
+            getContext().bindService(mIntent, new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName name, IBinder service) {
+                    IQcrilMsgTunnel tunnel = IQcrilMsgTunnel.Stub.asInterface(service);
+                    if (tunnel != null)
+                        mProtocol = new Protocol(tunnel);
+                }
+
+                @Override
+                public void onServiceDisconnected(ComponentName name) {
+                    mProtocol = null;
+                }
+            }, getContext().BIND_AUTO_CREATE);
         mNrModeSwitcher = (ListPreference) findPreference(KEY_NR_MODE_SWITCHER);
         mNrModeSwitcher.setOnPreferenceChangeListener(this);
         }
