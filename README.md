@@ -100,6 +100,9 @@ _Note that defining paths needs support in the kernel! Thus the features might n
 
 **Configurable overlays**
 
+ <!-- Whether device supports disabling PartsBin Alert Slider -->`<br />
+ <bool name="config_device_has_alert_slider">false</bool>`<br />
+
 `<!-- Whether the device has hardware navigation buttons (true/false) -->`<br />
 `<bool name="config_device_has_hw_nav_buttons"> </bool>`<br />
 
