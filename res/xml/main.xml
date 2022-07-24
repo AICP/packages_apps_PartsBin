@@ -155,7 +155,7 @@
 
     <com.aicp.gear.preference.SelfRemovingPreferenceCategory
         android:key="category_slider"
-        aicpextras:requiresConfig="@*android:bool/config_hasAlertSlider"
+        aicpextras:requiresConfig="@bool/config_device_has_alert_slider"
         android:title="@string/category_slider">
         <ListPreference
             android:key="slider_mode_top"
