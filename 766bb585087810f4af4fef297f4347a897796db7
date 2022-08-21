@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "723dc29c_c21565a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1393
+      },
+      "writtenOn": "2022-08-21T17:56:59Z",
+      "side": 1,
+      "message": "required to build instantnoodlep when packages/apps/PartsBin is populated/synced",
+      "revId": "766bb585087810f4af4fef297f4347a897796db7",
+      "serverId": "9f904cbb-a964-4fab-a7dc-5cfc4d5c238b"
+    }
+  ]
+}
